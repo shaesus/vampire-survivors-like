@@ -94,11 +94,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2db88ca4034d02b408fe33be93c67363, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Damage: 75
   _animator: {fileID: 6671441170586460710}
+  _attackRange: 1.5
   _maxHealth: 200
   _speed: 1
   _deathTime: 0
-  _attackRange: 1.5
 --- !u!1 &6671441170586460708
 GameObject:
   m_ObjectHideFlags: 0

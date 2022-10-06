@@ -94,13 +94,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b590ebd26a9ce4341ae4bb766b715b31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Damage: 35
   _animator: {fileID: 9171777429277803121}
+  _attackRange: 5
   _maxHealth: 100
   _speed: 1
   _deathTime: 1
   _projectilePrefab: {fileID: 8781442022163246809, guid: 589654efbcf958e409ac11eb598b4f83, type: 3}
   _reviveRadius: 5
-  _attackRange: 5
 --- !u!1 &9171777429277803127
 GameObject:
   m_ObjectHideFlags: 0

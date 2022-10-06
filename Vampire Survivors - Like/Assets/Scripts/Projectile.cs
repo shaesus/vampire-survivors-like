@@ -13,6 +13,7 @@ public class Projectile : MonoBehaviour
             if (enemy.TryGetComponent<EnemySkeleton>(out var skeleton))
             {
                 skeleton.TakeDamage(_damage);
+                Debug.Log(skeleton.name);
             }
             else if (enemy.TryGetComponent<NecromasterEnemy>(out var necromaster))
             {
@@ -21,6 +22,7 @@ public class Projectile : MonoBehaviour
             else
             {
                 enemy.TakeDamage(_damage);
+                Debug.Log(enemy.name);
             }
         }
     }

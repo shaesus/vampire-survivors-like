@@ -3,16 +3,7 @@ using UnityEngine;
 
 public class EnemySkeleton : Enemy
 {
-    [SerializeField] private float _attackRange = 1.5f;
-
     private bool _isAttacking = false;
-
-    private new void Awake()
-    {
-        _currentHealth = _maxHealth;
-
-        Damage = 75f;
-    }
 
     private new void Update()
     {
@@ -56,12 +47,9 @@ public class EnemySkeleton : Enemy
 
     private new void FixedUpdate()
     {
-        if (IsDead == false)
+        if (IsDead == false && _isAttacking == false)
         {
-            if (_isAttacking == false)
-            {
-                Move();
-            }
+            Move();
         }
     }
 

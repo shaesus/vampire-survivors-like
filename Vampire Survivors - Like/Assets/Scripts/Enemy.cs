@@ -4,15 +4,16 @@ using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour
 {
-    public float Damage { get; protected set; }
+    public float Damage = 25f;
 
     public bool IsDead { get; protected set; } = false;
 
     [SerializeField] protected Animator _animator;
 
+    [SerializeField] protected float _attackRange = 0f;
     [SerializeField] protected float _maxHealth = 100f;
     [SerializeField] protected float _speed = 1f;
-    [SerializeField] protected float _deathTime = 0.5f;
+    [SerializeField] protected float _deathTime = 0f;
 
     protected float _currentHealth;
     protected float _timeForNextDamage = 0f;
@@ -23,7 +24,6 @@ public class Enemy : MonoBehaviour
     protected void Awake()
     {
         _currentHealth = _maxHealth;
-        Damage = 25f;
     }
 
     protected void Update()
