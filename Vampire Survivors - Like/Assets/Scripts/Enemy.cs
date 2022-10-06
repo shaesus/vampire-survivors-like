@@ -10,6 +10,8 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] protected Animator _animator;
 
+    [SerializeField] protected int _directionCoefficient = 1;
+
     [SerializeField] protected float _attackRange = 0f;
     [SerializeField] protected float _maxHealth = 100f;
     [SerializeField] protected float _speed = 1f;
@@ -36,11 +38,11 @@ public class Enemy : MonoBehaviour
         _movement = (Player.Instance.transform.position - transform.position).normalized;
         if (_movement.x > 0)
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = new Vector3(1 * _directionCoefficient, 1, 1);
         }
         else if (_movement.x <= 0)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.localScale = new Vector3(-1 * _directionCoefficient, 1, 1);
         }
     }
 

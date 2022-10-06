@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a7511ad76b3ed9a43b4a95c13639136d
+guid: e93f3e0176f59fd469a29c43b7967f3c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -116,13 +116,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: hell-beast-breath_0
+      name: demon-fire-ball-blue_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
+        width: 19
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,20 +130,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4385a4605508139408e24cd8149a4ac2
-      internalID: -1340613416
+      spriteID: 00fe021d4deda8c4dbccacd67f7f8281
+      internalID: 1556460370
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hell-beast-breath_1
+      name: demon-fire-ball-blue_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 19
         y: 0
-        width: 64
-        height: 64
+        width: 19
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -151,20 +151,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b18b8c555c269c540b0f3749010b1e8e
-      internalID: 1803518314
+      spriteID: 851428e93c129844c8ba0e431aa5bf46
+      internalID: 792646390
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hell-beast-breath_2
+      name: demon-fire-ball-blue_2
       rect:
         serializedVersion: 2
-        x: 128
+        x: 38
         y: 0
-        width: 64
-        height: 64
+        width: 19
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -172,29 +172,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a34749a864aa03e43bc7ac9e4d782256
-      internalID: 847550463
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: hell-beast-breath_3
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 621be30b629eb504681364b072aa5d37
-      internalID: 323247345
+      spriteID: 4e8af67119e8e8f449719cd5e26d8f92
+      internalID: 1220936447
       vertices: []
       indices: 
       edges: []
@@ -210,10 +189,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      hell-beast-breath_2: 847550463
-      hell-beast-breath_3: 323247345
-      hell-beast-breath_0: -1340613416
-      hell-beast-breath_1: 1803518314
+      demon-fire-ball-blue_1: 792646390
+      demon-fire-ball-blue_0: 1556460370
+      demon-fire-ball-blue_2: 1220936447
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
