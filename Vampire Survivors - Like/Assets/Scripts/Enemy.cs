@@ -73,6 +73,11 @@ public class Enemy : MonoBehaviour
 
     protected void Die()
     {
+        if (IsDead == false)
+        {
+            GameManager.Instance.IncrementScore();
+        }
+
         Debug.Log(gameObject.name + " died!");
         IsDead = true;
 

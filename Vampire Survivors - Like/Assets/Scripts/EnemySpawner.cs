@@ -6,7 +6,7 @@ public class EnemySpawner : MonoBehaviour
 {
     private float _spawnCd = 1;
 
-    [SerializeField] private int _maxEnemies = 10;
+    [SerializeField] private int _maxEnemies = 15;
 
     [SerializeField] private float _spawnRadius = 15f;
 
@@ -25,6 +25,12 @@ public class EnemySpawner : MonoBehaviour
 
         ChangeEnemySpawnCD();
         GlobalEventManager.OnGameStageChanged.AddListener(ChangeEnemySpawnCD);
+        GlobalEventManager.OnGameStageChanged.AddListener(ChangeMaxEnemiesCount);
+    }
+
+    private void ChangeMaxEnemiesCount()
+    {
+        _maxEnemies = GameManager.Instance.Stage * 15;
     }
 
     private void ChangeEnemySpawnCD()

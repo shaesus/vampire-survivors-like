@@ -55,6 +55,11 @@ public class EnemySkeleton : Enemy
 
     private new void Die()
     {
+        if (IsDead == false)
+        {
+            GameManager.Instance.IncrementScore();
+        }
+
         Debug.Log(gameObject.name + " died!1");
 
         IsDead = true;
