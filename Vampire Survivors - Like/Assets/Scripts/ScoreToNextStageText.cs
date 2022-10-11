@@ -5,7 +5,7 @@ public class ScoreToNextStageText : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _scoreToNextStageText;
 
-    private void Start()
+    private void Awake()
     {
         GlobalEventManager.OnGameStageChanged.AddListener(UpdateScoreText);
     }

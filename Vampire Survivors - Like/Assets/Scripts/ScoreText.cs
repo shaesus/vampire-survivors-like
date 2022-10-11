@@ -5,7 +5,7 @@ public class ScoreText : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _scoreText;
 
-    private void Start()
+    private void Awake()
     {
         GlobalEventManager.OnScoreChanged.AddListener(UpdateScoreText);
     }

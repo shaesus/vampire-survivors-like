@@ -80,11 +80,6 @@ public class EnemySkeleton : Enemy
     {
         Debug.Log(gameObject.name + " tookDamage!");
 
-        if (_isAttacking == false)
-        {
-            _animator.SetTrigger("TookDamage");
-        }
-
         _currentHealth -= damage;
         if (_currentHealth <= 0)
             Die();
