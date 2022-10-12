@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Linq;
 using System.Collections;
-using UnityEngine.UI;
 
 public class ExplosionSpell : MonoBehaviour
 {
@@ -20,6 +19,10 @@ public class ExplosionSpell : MonoBehaviour
     {
         if (_canCast && Player.Instance.CurrentMana >= _manaCost)
         {
+            var explosion = Instantiate(Player.Instance.GetComponent<PlayerCombat>().ExplosionEffect,
+                Player.Instance.transform.position, Quaternion.identity);
+            Destroy(explosion, 1.2f);
+
             var enemies = Physics2D.OverlapCircleAll(Player.Instance.transform.position, Radius)
                 .Where(obj => obj.TryGetComponent(out Enemy enemy))
                 .Select(obj => obj.GetComponent<Enemy>());

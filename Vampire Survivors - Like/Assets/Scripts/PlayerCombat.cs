@@ -9,6 +9,7 @@ public class PlayerCombat : MonoBehaviour
     public GameObject ShootPoint;
     public GameObject DashTrail;
     public GameObject MeleeAttackTrail;
+    public GameObject ExplosionEffect;
 
     public UnityAction[] Spells { get; set; }
 
