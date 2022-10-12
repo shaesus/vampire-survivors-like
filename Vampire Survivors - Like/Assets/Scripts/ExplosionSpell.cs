@@ -46,7 +46,6 @@ public class ExplosionSpell : MonoBehaviour
             StartCoroutine(StartCooldown());
 
             Player.Instance.DecreaseMana(_manaCost);
-            //Need Animation!!!!!
         }
         else if (Player.Instance.CurrentMana < _manaCost)
         {
