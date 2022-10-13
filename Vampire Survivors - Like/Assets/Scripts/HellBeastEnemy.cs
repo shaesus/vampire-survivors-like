@@ -3,19 +3,14 @@ using System.Collections;
 
 public class HellBeastEnemy : Enemy
 {
-    private bool _isAttacking = false;
-
     private void Start()
     {
         _damageDelay = 0.8f;
     }
 
-    private IEnumerator StartAttack()
+    private void StartAttack()
     {
-        yield return new WaitForSeconds(0.5f);
         _isAttacking = true;
-        yield return new WaitForSeconds(0.95f);
-        _isAttacking = false;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -37,7 +32,6 @@ public class HellBeastEnemy : Enemy
             if (_isAttacking == false)
             {
                 _animator.SetTrigger("Attack");
-                StartCoroutine(StartAttack());
             }
             else
             {

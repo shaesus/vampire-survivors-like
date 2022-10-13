@@ -3,15 +3,10 @@ using UnityEngine;
 
 public class DemonEnemy : Enemy
 {
-    private bool _isAttacking = false;
-
-    private IEnumerator StartAttack()
+    private void StartAttack()
     {
         _isAttacking = true;
-        yield return new WaitForSeconds(0.915f);
-        Attack();
-        yield return new WaitForSeconds(0.5f);
-        _isAttacking = false;
+        _animator.SetTrigger("Attack");
     }
 
     private void Attack()
@@ -30,9 +25,8 @@ public class DemonEnemy : Enemy
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent<Player>(out var player) && _isAttacking == false)
-        {
-            _animator.SetTrigger("Attack");
-            StartCoroutine(StartAttack());
+        { 
+            StartAttack();
         }
     }
 

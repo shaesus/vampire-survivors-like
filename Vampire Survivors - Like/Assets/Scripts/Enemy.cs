@@ -23,6 +23,8 @@ public class Enemy : MonoBehaviour
 
     protected Vector2 _movement;
 
+    protected bool _isAttacking = false;
+
     protected void Awake()
     {
         _currentHealth = _maxHealth;
@@ -31,6 +33,11 @@ public class Enemy : MonoBehaviour
     protected void Update()
     {
         Rotate();
+    }
+
+    private void SetIsAttackingFalse()
+    {
+        _isAttacking = false;
     }
 
     protected void Rotate()

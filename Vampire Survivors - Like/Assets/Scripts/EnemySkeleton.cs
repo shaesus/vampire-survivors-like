@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class EnemySkeleton : Enemy
 {
-    private bool _isAttacking = false;
-
     private new void Update()
     {
         if (IsDead == false)
@@ -12,7 +10,7 @@ public class EnemySkeleton : Enemy
             if (Physics2D.Raycast(transform.position, Vector2.right * transform.localScale.x,
                 _attackRange, LayerMask.GetMask("Player")) && _isAttacking == false)
             {
-                StartCoroutine(StartAttack());
+                StartAttack();
             }
 
             if (_isAttacking == false)
@@ -22,14 +20,10 @@ public class EnemySkeleton : Enemy
         }
     }
 
-    private IEnumerator StartAttack()
+    private void StartAttack()
     {
         _isAttacking = true;
         _animator.SetTrigger("Attack");
-        yield return new WaitForSeconds(0.8f);
-        Attack();
-        yield return new WaitForSeconds(1.1f);
-        _isAttacking = false;
     }
 
     private void Attack()

@@ -13,8 +13,6 @@ public class NecromasterEnemy : Enemy
 
     private float _reviveCD = 7f;
 
-    private bool _busy = false;
-
     private void Start()
     {
         StartCoroutine(StartRevivingCycle());
@@ -25,7 +23,7 @@ public class NecromasterEnemy : Enemy
         while (true)
         {
             yield return new WaitForSeconds(_reviveCD);
-            if (_busy == false)
+            if (_isAttacking == false)
             {
                 _animator.SetTrigger("Revive");
                 yield return new WaitForSeconds(0.9f);
@@ -38,7 +36,7 @@ public class NecromasterEnemy : Enemy
     {
         Debug.Log(gameObject.name + " tookDamage!");
 
-        if (_busy == false)
+        if (_isAttacking == false)
         {
             _animator.SetTrigger("TookDamage");
 
@@ -54,9 +52,9 @@ public class NecromasterEnemy : Enemy
         _directionTowardsThePlayer = Player.Instance.transform.position - transform.position;
         var distanceToPlayer = _directionTowardsThePlayer.magnitude;
 
-        if (distanceToPlayer <= _attackRange && _busy == false)
+        if (distanceToPlayer <= _attackRange && _isAttacking == false)
         {
-            StartCoroutine(StartAttack());
+            StartAttack();
         }
 
         Rotate();
@@ -64,7 +62,7 @@ public class NecromasterEnemy : Enemy
 
     private new void FixedUpdate()
     {
-        if (_busy == false)
+        if (_isAttacking == false)
         {
             Move();
         }
@@ -84,14 +82,10 @@ public class NecromasterEnemy : Enemy
         }  
     }
 
-    private IEnumerator StartAttack()
+    private void StartAttack()
     {
-        _busy = true;
+        _isAttacking = true;
         _animator.SetTrigger("Attack");
-        yield return new WaitForSeconds(1.2f);
-        Attack();
-        yield return new WaitForSeconds(0.5f);
-        _busy = false;
     }
 
     private void Attack()
