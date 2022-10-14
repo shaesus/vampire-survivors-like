@@ -47,7 +47,7 @@ public class EnemySkeleton : Enemy
         }
     }
 
-    private new void Die()
+    public override void Die()
     {
         if (IsDead == false)
         {
@@ -70,7 +70,7 @@ public class EnemySkeleton : Enemy
         GetComponent<BoxCollider2D>().isTrigger = false;
     }
 
-    public new void TakeDamage(float damage)
+    public override void TakeDamage(float damage)
     {
         Debug.Log(gameObject.name + " tookDamage!");
 

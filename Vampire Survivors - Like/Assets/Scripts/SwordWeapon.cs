@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Linq;
 using System.Collections;
 
-public class SwordWeapon : MonoBehaviour
+public class SwordWeapon : Weapon
 {
     public float Damage { get; set; } = 30f;
     public float Force { get; set; } = 10f;
@@ -32,18 +32,7 @@ public class SwordWeapon : MonoBehaviour
 
             foreach (var enemy in enemies)
             {
-                if (enemy.TryGetComponent<EnemySkeleton>(out var skeleton))
-                {
-                    skeleton.TakeDamage(Damage);
-                }
-                else if (enemy.TryGetComponent<NecromasterEnemy>(out var necromaster))
-                {
-                    necromaster.TakeDamage(Damage);
-                }
-                else
-                {
-                    enemy.TakeDamage(Damage);
-                }
+                enemy.TakeDamage(Damage);
                 enemy.gameObject.GetComponent<Rigidbody2D>().AddForce((enemy.transform.position
                         - Player.Instance.transform.position).normalized * Force, ForceMode2D.Impulse);
             }
@@ -61,10 +50,13 @@ public class SwordWeapon : MonoBehaviour
 
     private void SpawnTrail(GameObject attackTrail)
     {
-        _trailOffset = new Vector3(1.75f * Player.Instance.transform.localScale.x, -0.3f, 0);
+        _trailOffset = new Vector3((1.75f + (AttackRange / 2f - 1))
+            * Player.Instance.transform.localScale.x, -0.3f, 0);
+
         var trail = Instantiate(attackTrail, Player.Instance.transform.position + _trailOffset,
             Quaternion.identity);
-        trail.transform.localScale = Player.Instance.transform.localScale;
+        trail.transform.localScale = new Vector3(AttackRange / 2f * Player.Instance.transform.localScale.x,
+            1, 1);
         Destroy(trail, 0.35f);
     }
 
@@ -73,5 +65,13 @@ public class SwordWeapon : MonoBehaviour
         _canAttack = false;
         yield return new WaitForSeconds(AttackCooldown);
         _canAttack = true;
+    }
+
+    public override void LvlUp()
+    {
+        Debug.Log("Sword");
+        AttackRange *= 1.1f;
+        Damage *= 1.1f;
+        Force *= 1.1f;
     }
 }

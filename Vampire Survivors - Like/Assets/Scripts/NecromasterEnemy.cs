@@ -32,7 +32,7 @@ public class NecromasterEnemy : Enemy
         }
     }
 
-    public new void TakeDamage(float damage)
+    public override void TakeDamage(float damage)
     {
         Debug.Log(gameObject.name + " tookDamage!");
 

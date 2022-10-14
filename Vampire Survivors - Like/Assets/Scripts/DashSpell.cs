@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class DashSpell : MonoBehaviour
+public class DashSpell : Spell
 {
     public float DashForce { get; set; } = 55f;
 
@@ -101,5 +101,10 @@ public class DashSpell : MonoBehaviour
         spriteRenderer.enabled = false;
         yield return new WaitForSeconds(time);
         spriteRenderer.enabled = true;
+    }
+
+    public override void LvlUp()
+    {
+        base.LvlUp();
     }
 }

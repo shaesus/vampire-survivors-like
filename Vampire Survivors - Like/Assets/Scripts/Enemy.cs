@@ -63,7 +63,7 @@ public class Enemy : MonoBehaviour
         transform.Translate(_movement * _speed * Time.fixedDeltaTime);
     }
 
-    public void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
         Debug.Log(gameObject.name + " tookDamage!");
 
@@ -78,7 +78,7 @@ public class Enemy : MonoBehaviour
             Die();
     }
 
-    protected void Die()
+    public virtual void Die()
     {
         if (IsDead == false)
         {

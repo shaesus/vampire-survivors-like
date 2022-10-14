@@ -25,9 +25,12 @@ public class WeaponHandler : MonoBehaviour
 
     private void InitializeCircle(GameObject rotatingPrefab, int count, float radius)
     {
-        var cop = Instantiate(_circleOfProjectiles, transform.position, Quaternion.identity);
-        cop.GetComponent<CircleOfProjectiles>().Prefab = rotatingPrefab;
-        cop.GetComponent<CircleOfProjectiles>().CreateCircle(count, radius);
+        var rotatingWeapon = Player.Instance.gameObject.AddComponent<RotatingWeapon>();
+        rotatingWeapon.Prefab = rotatingPrefab;
+        rotatingWeapon.Count = count;
+        rotatingWeapon.Radius = radius;
+        rotatingWeapon.CirclePrefab = _circleOfProjectiles;
+
         WeaponContainers.Instance.InitializeContainer(circlePlaceholder, "Projectile Orbital",
             "Orbital", rotatingPrefab.GetComponent<Projectile>().Damage);
     }
