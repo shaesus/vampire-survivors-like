@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3012286000661609656}
   - component: {fileID: 3012286000661609659}
   - component: {fileID: 3012286000661609658}
-  - component: {fileID: 3012286000661609661}
   - component: {fileID: 3012286000661609657}
   - component: {fileID: 147756975247546847}
   - component: {fileID: 7456940379060107}
@@ -84,32 +83,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.4876819, y: 2.2616096}
   m_EdgeRadius: 0
---- !u!61 &3012286000661609661
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3012286000661609660}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -2.6684437, y: -1.2969798}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5, y: 4.5}
-    newSize: {x: 5, y: 4.5}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 2.8955069, y: 1.4356706}
-  m_EdgeRadius: 0
 --- !u!114 &3012286000661609657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,10 +98,12 @@ MonoBehaviour:
   Damage: 40
   _animator: {fileID: 7456940379060107}
   _directionCoefficient: -1
-  _attackRange: 0
+  _attackRange: 4
   _maxHealth: 100
   _speed: 1
   _deathTime: 0
+  spriteRenderer: {fileID: 147756975247546847}
+  _offset: {x: 0, y: -1.3, z: 0}
 --- !u!212 &147756975247546847
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -149,7 +124,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 37afb2ad9b73f1e4f978657b6842cd0f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

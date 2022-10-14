@@ -102,6 +102,7 @@ MonoBehaviour:
   _maxHealth: 100
   _speed: 1
   _deathTime: 1
+  spriteRenderer: {fileID: 3572347567158363140}
   _projectilePrefab: {fileID: 8781442022163246809, guid: 589654efbcf958e409ac11eb598b4f83, type: 3}
   _reviveRadius: 5
 --- !u!212 &3572347567158363140
@@ -124,7 +125,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 37afb2ad9b73f1e4f978657b6842cd0f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

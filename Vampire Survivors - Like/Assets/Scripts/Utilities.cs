@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public static class Utilities
 {
@@ -33,5 +34,18 @@ public static class Utilities
         }
 
         return i;
+    }
+
+    public static IEnumerator BlinkSprite(SpriteRenderer spriteRenderer)
+    {
+        var color = spriteRenderer.color;
+        var defaultAlpha = color.a;
+        color.a = 0f;
+        spriteRenderer.color = color;
+
+        yield return new WaitForSeconds(0.2f);
+
+        color.a = defaultAlpha;
+        spriteRenderer.color = color;
     }
 }

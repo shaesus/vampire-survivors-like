@@ -40,6 +40,8 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        OnPlayerTakeDamage.AddListener(BlinkSprite);
+
         StartCoroutine(RegenerateMana());
         StartCoroutine(RegenerateHp());
     }
@@ -95,6 +97,11 @@ public class Player : MonoBehaviour
 
         if (CurrentHealth <= 0)
             Die();
+    }
+
+    private void BlinkSprite()
+    {
+        StartCoroutine(Utilities.BlinkSprite(spriteRenderer));
     }
 
     private void Die()

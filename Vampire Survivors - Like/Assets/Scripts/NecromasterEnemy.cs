@@ -32,21 +32,6 @@ public class NecromasterEnemy : Enemy
         }
     }
 
-    public override void TakeDamage(float damage)
-    {
-        Debug.Log(gameObject.name + " tookDamage!");
-
-        if (_isAttacking == false)
-        {
-            _animator.SetTrigger("TookDamage");
-
-        }
-
-        _currentHealth -= damage;
-        if (_currentHealth <= 0)
-            Die();
-    }
-
     private new void Update()
     {
         _directionTowardsThePlayer = Player.Instance.transform.position - transform.position;

@@ -3,10 +3,23 @@ using UnityEngine;
 
 public class DemonEnemy : Enemy
 {
+    [SerializeField] private Vector3 _offset;
+
     private void StartAttack()
     {
         _isAttacking = true;
         _animator.SetTrigger("Attack");
+    }
+
+    private new void Update()
+    {
+        if (Physics2D.Raycast(transform.position + _offset, Vector2.left * transform.localScale.x,
+                _attackRange, LayerMask.GetMask("Player")))
+        {
+            StartAttack();
+        }
+
+        Rotate();
     }
 
     private void Attack()
@@ -22,14 +35,6 @@ public class DemonEnemy : Enemy
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent<Player>(out var player) && _isAttacking == false)
-        { 
-            StartAttack();
-        }
-    }
-
     private new void OnCollisionEnter2D(Collision2D collision)
     {
 
@@ -38,5 +43,11 @@ public class DemonEnemy : Enemy
     private new void OnCollisionStay2D(Collision2D collision)
     {
 
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position + _offset, Vector3.left * transform.localScale.x * _attackRange);
     }
 }

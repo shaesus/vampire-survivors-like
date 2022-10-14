@@ -70,15 +70,6 @@ public class EnemySkeleton : Enemy
         GetComponent<BoxCollider2D>().isTrigger = false;
     }
 
-    public override void TakeDamage(float damage)
-    {
-        Debug.Log(gameObject.name + " tookDamage!");
-
-        _currentHealth -= damage;
-        if (_currentHealth <= 0)
-            Die();
-    }
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

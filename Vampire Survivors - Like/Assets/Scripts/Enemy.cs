@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour
 {
@@ -16,6 +15,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float _maxHealth = 100f;
     [SerializeField] protected float _speed = 1f;
     [SerializeField] protected float _deathTime = 0f;
+
+    [SerializeField] protected SpriteRenderer spriteRenderer;
 
     protected float _currentHealth;
     protected float _timeForNextDamage = 0f;
@@ -67,11 +68,7 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log(gameObject.name + " tookDamage!");
 
-        if (_animator != null)
-        {
-            _animator.SetTrigger("TookDamage");
-            
-        }
+        StartCoroutine(Utilities.BlinkSprite(spriteRenderer));
 
         _currentHealth -= damage;
         if (_currentHealth <= 0)
