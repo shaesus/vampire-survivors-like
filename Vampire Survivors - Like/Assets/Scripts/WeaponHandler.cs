@@ -53,7 +53,7 @@ public class WeaponHandler : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("FBRPickup"))
         {
-            InitializeCircle(_fireballRotatingPrefab, 3, 2f);
+            InitializeCircle(_fireballRotatingPrefab, 3, 1.5f);
         }
         else if (collision.gameObject.CompareTag("SwordPickup"))
         {

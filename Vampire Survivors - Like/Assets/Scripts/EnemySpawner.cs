@@ -4,6 +4,8 @@ using System.Linq;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public static EnemySpawner Instance { get; private set; }
+
     private float _spawnCd = 1;
 
     [SerializeField] private int _maxEnemies = 15;
@@ -14,28 +16,48 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private GameObject[] _enemies2ndStage;
     [SerializeField] private GameObject[] _enemies3rdStage;
     [SerializeField] private GameObject[] _enemies4thStage;
+    [SerializeField] private GameObject[] _enemies5thStage;
+    [SerializeField] private GameObject[] _enemies6thStage;
+    [SerializeField] private GameObject[] _enemies7thStage;
+    [SerializeField] private GameObject[] _enemies8thStage;
+    [SerializeField] private GameObject[] _enemies9thStage;
 
-    private GameObject[][] _enemies;
+    public GameObject[][] Enemies;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance == this)
+        {
+            Destroy(gameObject);
+        }
+
+        Enemies = new GameObject[][] { _enemies1stStage, _enemies2ndStage, _enemies3rdStage, 
+            _enemies4thStage, _enemies5thStage, _enemies6thStage, _enemies7thStage, _enemies8thStage,
+            _enemies9thStage};
+    }
 
     private void Start()
     {
-        _enemies = new GameObject[][] { _enemies1stStage, _enemies2ndStage, _enemies3rdStage, _enemies4thStage };
-
         StartCoroutine(SpawnEnemies());
 
         ChangeEnemySpawnCD();
+        ChangeMaxEnemiesCount();
         GlobalEventManager.OnGameStageChanged.AddListener(ChangeEnemySpawnCD);
         GlobalEventManager.OnGameStageChanged.AddListener(ChangeMaxEnemiesCount);
     }
 
     private void ChangeMaxEnemiesCount()
     {
-        _maxEnemies = GameManager.Instance.Stage * 15;
+        _maxEnemies = GameManager.Instance.Stage * 7;
     }
 
     private void ChangeEnemySpawnCD()
     {
-        _spawnCd = 3 / GameManager.Instance.Stage;
+        _spawnCd = 2 / Mathf.Pow(1.2f, GameManager.Instance.Stage - 1);
     }
 
     private IEnumerator SpawnEnemies()
@@ -47,8 +69,8 @@ public class EnemySpawner : MonoBehaviour
             if (FindObjectsOfType<Enemy>().Where(enemy => enemy.IsDead == false).ToArray()
                 .Length < _maxEnemies)
             {
-                var randomEnemy = _enemies[GameManager.Instance.Stage - 1][Random.Range(0,
-                    _enemies[GameManager.Instance.Stage - 1].Length)];
+                var randomEnemy = Enemies[GameManager.Instance.Stage - 1][Random.Range(0,
+                    Enemies[GameManager.Instance.Stage - 1].Length)];
 
                 var rndAngle = Random.Range(0, 360);
                 //Calculating spawn position

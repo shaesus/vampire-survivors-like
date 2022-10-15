@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
 
     public int ScoreToNextStage { get; private set; } = 10;
 
+    private int _maxStage;
+
     private void Awake()
     {
         if (Instance == null)
@@ -27,22 +29,29 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        Player.Instance.OnPlayerLvlUp.AddListener(LvlUpAllWeaponsAndSpells);
+
         GlobalEventManager.SendOnScoreChanged();
         GlobalEventManager.SendOnGameStageChanged();
+
+        _maxStage = EnemySpawner.Instance.Enemies.GetLength(0);
     }
 
     public void IncrementStage()
     {
-        Stage++;
-        ScoreToNextStage += (int)(ScoreToNextStage * 1.5f);
-        GlobalEventManager.SendOnGameStageChanged();
+        if (Stage < _maxStage)
+        {
+            Stage++;
+            ScoreToNextStage += (int)(ScoreToNextStage * 1.1f);
+            GlobalEventManager.SendOnGameStageChanged();
+        }
     }
 
     public void IncrementScore()
     {
         Score++;
 
-        if (Stage < 4 && Score >= ScoreToNextStage)
+        if (Stage < _maxStage && Score >= ScoreToNextStage)
         {
             IncrementStage();
         }
@@ -53,5 +62,26 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void LvlUpAllWeaponsAndSpells()
+    {
+        var weapons = Player.Instance.GetComponents<Weapon>();
+        foreach (var weapon in weapons)
+        {
+            weapon.LvlUp();
+        }
+
+        var childWeapons = Player.Instance.GetComponentsInChildren<Weapon>();
+        foreach (var weapon in childWeapons)
+        {
+            weapon.LvlUp();
+        }
+
+        var spells = Player.Instance.GetComponents<Spell>();
+        foreach (var spell in spells)
+        {
+            spell.LvlUp();
+        }
     }
 }

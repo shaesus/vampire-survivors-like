@@ -13,7 +13,7 @@ public class ScoreToNextStageText : MonoBehaviour
     private void UpdateScoreText()
     {
         string text;
-        if (GameManager.Instance.Stage == 4)
+        if (GameManager.Instance.Stage >= 9)
         {
             text = "TO NEXT STAGE -";
         }

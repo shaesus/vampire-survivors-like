@@ -196,4 +196,5 @@ MonoBehaviour:
   _maxHealth: 100
   _speed: 1.5
   _deathTime: 0
-  spriteRenderer: {fileID: 8068658588529635961}
+  _xpForKill: 5
+  _spriteRenderer: {fileID: 8068658588529635961}

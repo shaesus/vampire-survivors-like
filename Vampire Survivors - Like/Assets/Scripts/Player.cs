@@ -9,9 +9,13 @@ public class Player : MonoBehaviour
     [HideInInspector] public UnityEvent OnPlayerTakeDamage = new UnityEvent();
     [HideInInspector] public UnityEvent OnPlayerChangeHp = new UnityEvent();
     [HideInInspector] public UnityEvent OnPlayerChangeMana = new UnityEvent();
+    [HideInInspector] public UnityEvent OnPlayerChangeXp = new UnityEvent();
+    [HideInInspector] public UnityEvent OnPlayerLvlUp = new UnityEvent();
 
-    public SpriteRenderer spriteRenderer;
+    public SpriteRenderer SR;
 
+    public float CurrentXP { get; private set; }
+    public float XPForNextLevel { get; private set; } = 100f;
     public float CurrentMana { get; private set; }
     public float MaxMana { get; private set; } = 100f;
     public float CurrentHealth { get; private set; }
@@ -19,14 +23,20 @@ public class Player : MonoBehaviour
     public float HpPerSecond { get; set; } = 5f;
     public float ManaPerSecond { get; set; } = 20f;
 
+    public int Lvl { get; private set; } = 1;
+
     [SerializeField] private float _healDelay = 3f;
 
     private float _nextTimeToHeal;
+
+    private bool _isBlinking = false;
 
     private void Awake()
     {
         CurrentHealth = MaxHealth;
         CurrentMana = MaxMana;
+
+        CurrentXP = 0f;
 
         if (Instance == null)
         {
@@ -83,6 +93,21 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void IncreaseXP(float xp)
+    {
+        CurrentXP += xp;
+        if (CurrentXP >= XPForNextLevel)
+        {
+            CurrentXP = CurrentXP % XPForNextLevel;
+            XPForNextLevel *= 1.2f;
+            Lvl++;
+
+            OnPlayerLvlUp.Invoke();
+            //LVLUPS!!
+        }
+        OnPlayerChangeXp.Invoke();
+    }
+
     public void TakeDamage(float damage)
     {
         Debug.Log(gameObject.name + " tookDamage!");
@@ -99,9 +124,27 @@ public class Player : MonoBehaviour
             Die();
     }
 
+    private IEnumerator StartBlinkSprite()
+    {
+        if (_isBlinking == false)
+        {
+            _isBlinking = true;
+            var color = SR.color;
+            var defaultAlpha = color.a;
+            color.a = 0f;
+            SR.color = color;
+
+            yield return new WaitForSeconds(0.2f);
+
+            color.a = defaultAlpha;
+            SR.color = color;
+            _isBlinking = false;
+        }
+    }
+
     private void BlinkSprite()
     {
-        StartCoroutine(Utilities.BlinkSprite(spriteRenderer));
+        StartCoroutine(StartBlinkSprite());
     }
 
     private void Die()

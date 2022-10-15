@@ -47,7 +47,7 @@ public class DashSpell : Spell
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),
             LayerMask.NameToLayer("Enemy"));
 
-        StartCoroutine(DisableSpriteRenderer(_playerInstance.spriteRenderer, 0.25f));
+        StartCoroutine(DisableSpriteRenderer(_playerInstance.SR, 0.25f));
 
         if (_playerController.Movement.magnitude == 0)
         {

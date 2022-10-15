@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
         _horizontalInput = Input.GetAxisRaw("Horizontal");
         _verticalInput = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetKeyDown(KeyCode.F) && GameManager.Instance.Stage <= 3) //Increment game stage
+        if (Input.GetKeyDown(KeyCode.F)) //Increment game stage
         {
             GameManager.Instance.IncrementStage();
         }

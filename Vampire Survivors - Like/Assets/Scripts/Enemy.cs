@@ -1,8 +1,11 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour
 {
+    [HideInInspector] protected UnityEvent OnEnemyDie = new UnityEvent();
+
     public float Damage = 25f;
 
     public bool IsDead { get; protected set; } = false;
@@ -15,8 +18,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float _maxHealth = 100f;
     [SerializeField] protected float _speed = 1f;
     [SerializeField] protected float _deathTime = 0f;
+    [SerializeField] protected float _xpForKill = 5f;
 
-    [SerializeField] protected SpriteRenderer spriteRenderer;
+    [SerializeField] protected SpriteRenderer _spriteRenderer;
 
     protected float _currentHealth;
     protected float _timeForNextDamage = 0f;
@@ -25,10 +29,13 @@ public class Enemy : MonoBehaviour
     protected Vector2 _movement;
 
     protected bool _isAttacking = false;
+    protected bool _isBlinking = false;
 
     protected void Awake()
     {
         _currentHealth = _maxHealth;
+
+        OnEnemyDie.AddListener(Die);
     }
 
     protected void Update()
@@ -68,11 +75,34 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log(gameObject.name + " tookDamage!");
 
-        StartCoroutine(Utilities.BlinkSprite(spriteRenderer));
+        if (IsDead == false)
+        {
+            StartCoroutine(StartBlinkSprite());
+        }
 
         _currentHealth -= damage;
         if (_currentHealth <= 0)
-            Die();
+        {
+            OnEnemyDie.Invoke();
+        }
+    }
+
+    private IEnumerator StartBlinkSprite()
+    {
+        if (_isBlinking == false)
+        {
+            _isBlinking = true;
+            var color = _spriteRenderer.color;
+            var defaultAlpha = color.a;
+            color.a = 0f;
+            _spriteRenderer.color = color;
+
+            yield return new WaitForSeconds(0.2f);
+
+            color.a = defaultAlpha;
+            _spriteRenderer.color = color;
+            _isBlinking = false;
+        }
     }
 
     public virtual void Die()
@@ -80,6 +110,7 @@ public class Enemy : MonoBehaviour
         if (IsDead == false)
         {
             GameManager.Instance.IncrementScore();
+            Player.Instance.IncreaseXP(_xpForKill);
         }
 
         Debug.Log(gameObject.name + " died!");

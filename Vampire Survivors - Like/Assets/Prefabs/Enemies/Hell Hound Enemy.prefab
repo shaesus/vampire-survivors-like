@@ -204,6 +204,7 @@ MonoBehaviour:
   _directionCoefficient: -1
   _attackRange: 0
   _maxHealth: 100
-  _speed: 2.5
+  _speed: 3
   _deathTime: 0
-  spriteRenderer: {fileID: 6549105108209174386}
+  _xpForKill: 5
+  _spriteRenderer: {fileID: 6549105108209174386}

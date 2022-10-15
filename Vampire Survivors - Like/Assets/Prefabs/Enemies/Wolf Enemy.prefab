@@ -159,7 +159,8 @@ MonoBehaviour:
   _maxHealth: 100
   _speed: 2.5
   _deathTime: 0
-  spriteRenderer: {fileID: 7901826454243765429}
+  _xpForKill: 5
+  _spriteRenderer: {fileID: 7901826454243765429}
 --- !u!50 &2828089239798187185
 Rigidbody2D:
   serializedVersion: 4

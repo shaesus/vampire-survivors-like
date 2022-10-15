@@ -52,6 +52,7 @@ public class EnemySkeleton : Enemy
         if (IsDead == false)
         {
             GameManager.Instance.IncrementScore();
+            Player.Instance.IncreaseXP(_xpForKill);
         }
 
         Debug.Log(gameObject.name + " died!1");

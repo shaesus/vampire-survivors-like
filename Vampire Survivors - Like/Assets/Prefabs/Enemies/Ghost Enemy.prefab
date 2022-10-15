@@ -101,7 +101,8 @@ MonoBehaviour:
   _maxHealth: 100
   _speed: 2
   _deathTime: 0.42
-  spriteRenderer: {fileID: 6625007813639853086}
+  _xpForKill: 5
+  _spriteRenderer: {fileID: 6625007813639853086}
 --- !u!1 &6625007813639853084
 GameObject:
   m_ObjectHideFlags: 0
