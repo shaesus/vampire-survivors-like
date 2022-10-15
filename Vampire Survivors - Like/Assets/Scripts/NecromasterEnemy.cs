@@ -7,11 +7,10 @@ public class NecromasterEnemy : Enemy
     [SerializeField] private GameObject _projectilePrefab;
 
     [SerializeField] private float _reviveRadius = 5f;
+    [SerializeField] private float _reviveCD = 7f;
 
     private Vector3 _directionTowardsThePlayer;
     private Vector3 _projectileOffset = new Vector3(-0.245f, -0.48f, 0);
-
-    private float _reviveCD = 7f;
 
     private void Start()
     {

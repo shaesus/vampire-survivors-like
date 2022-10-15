@@ -99,10 +99,10 @@ MonoBehaviour:
   _animator: {fileID: 2831189245043262754}
   _directionCoefficient: 1
   _attackRange: 5
-  _maxHealth: 100
+  _maxHealth: 125
   _speed: 1
   _deathTime: 1
-  _xpForKill: 5
+  _xpForKill: 7
   _spriteRenderer: {fileID: 3572347567158363140}
   _projectilePrefab: {fileID: 8781442022163246809, guid: 589654efbcf958e409ac11eb598b4f83, type: 3}
   _reviveRadius: 5

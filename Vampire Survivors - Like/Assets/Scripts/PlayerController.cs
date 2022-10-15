@@ -19,6 +19,11 @@ public class PlayerController : MonoBehaviour
         {
             GameManager.Instance.IncrementStage();
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            GameManager.Instance.LvlUpAllWeaponsAndSpells();
+        }
     }
 
     private void FixedUpdate()

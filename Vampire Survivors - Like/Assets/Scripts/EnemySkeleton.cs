@@ -3,6 +3,11 @@ using UnityEngine;
 
 public class EnemySkeleton : Enemy
 {
+    [SerializeField] private float _destroyCD = 5f;
+
+    private float _timeToDestroy;
+    private float _timeSinceDeath;
+
     private new void Update()
     {
         if (IsDead == false)
@@ -57,14 +62,33 @@ public class EnemySkeleton : Enemy
 
         Debug.Log(gameObject.name + " died!1");
 
+        _timeSinceDeath = Time.time;
+        _timeToDestroy = Time.time + _destroyCD;
+
         IsDead = true;
 
         _animator.SetBool("IsDead", IsDead);
         GetComponent<BoxCollider2D>().isTrigger = true;
+
+        StartCoroutine(WaitForDestroy());
+    }
+
+    private IEnumerator WaitForDestroy()
+    {
+        while(IsDead)
+        {
+            if (_timeSinceDeath > _timeToDestroy)
+            {
+                Destroy(gameObject);
+            }
+
+            _timeSinceDeath += Time.deltaTime;
+            yield return null;
+        }
     }
 
     public void ComeAlive(float reviveHpCoefficient)
-    {
+    { 
         IsDead = false;
         _animator.SetBool("IsDead", IsDead);
         _currentHealth = reviveHpCoefficient * _maxHealth;

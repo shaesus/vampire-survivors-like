@@ -99,11 +99,12 @@ MonoBehaviour:
   _animator: {fileID: 8759876605780062078}
   _directionCoefficient: 1
   _attackRange: 1.5
-  _maxHealth: 200
+  _maxHealth: 175
   _speed: 1
   _deathTime: 0
-  _xpForKill: 5
+  _xpForKill: 8
   _spriteRenderer: {fileID: 4142698037664651927}
+  _destroyCD: 5
 --- !u!212 &4142698037664651927
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -203,8 +203,8 @@ MonoBehaviour:
   _animator: {fileID: 6549105108209174385}
   _directionCoefficient: -1
   _attackRange: 0
-  _maxHealth: 100
-  _speed: 3
+  _maxHealth: 75
+  _speed: 4
   _deathTime: 0
   _xpForKill: 5
   _spriteRenderer: {fileID: 6549105108209174386}

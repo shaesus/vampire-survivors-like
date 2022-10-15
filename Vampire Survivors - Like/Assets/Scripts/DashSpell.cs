@@ -11,7 +11,6 @@ public class DashSpell : Spell
 
     private float _dashingTime = 0.5f;
     private float _dashingCooldown = 1f;
-    private float _dashDistance = 5.5f;
     private float _manaCost = 20f;
 
     private Player _playerInstance;
@@ -86,9 +85,12 @@ public class DashSpell : Spell
             trail.transform.localScale = new Vector3(1, -1, 1);
         }
 
+        var localScale = trail.transform.localScale;
+        trail.transform.localScale = new Vector3(localScale.x * DashForce / 10f / 5.5f, localScale.y, localScale.z);
+
         var trailRb = trail.GetComponent<Rigidbody2D>();
         trailRb.MovePosition(trailRb.position + _playerController.Movement.normalized
-            * _dashDistance / 2);
+            * DashForce / 10f / 2);
 
         trail.GetComponent<SpriteRenderer>().enabled = true;
         trail.GetComponent<Animator>().enabled = true;
@@ -105,6 +107,6 @@ public class DashSpell : Spell
 
     public override void LvlUp()
     {
-        base.LvlUp();
+        DashForce *= 1.1f;
     }
 }
