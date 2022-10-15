@@ -5,10 +5,12 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    public GameObject PauseMenu;
+
+    public bool IsGamePaused { get; private set; } = false;
+
     public int Stage { get; private set; }
-
     public int Score { get; private set; }
-
     public int ScoreToNextStage { get; private set; } = 10;
 
     private int _maxStage;
@@ -83,5 +85,27 @@ public class GameManager : MonoBehaviour
         {
             spell.LvlUp();
         }
+    }
+
+    public void TogglePauseGame()
+    {
+        if (PauseMenu.activeSelf == true)
+        {
+            IsGamePaused = false;
+            PauseMenu.SetActive(false);
+            Time.timeScale = 1f;
+        }
+        else
+        {
+            IsGamePaused = true;
+            PauseMenu.SetActive(true);
+            Time.timeScale = 0f;
+        }
+    }
+
+    public void RestartGame()
+    {
+        TogglePauseGame();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

@@ -24,6 +24,11 @@ public class PlayerController : MonoBehaviour
         {
             GameManager.Instance.LvlUpAllWeaponsAndSpells();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameManager.Instance.TogglePauseGame();
+        }
     }
 
     private void FixedUpdate()
