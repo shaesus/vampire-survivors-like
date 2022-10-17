@@ -94,12 +94,14 @@ public class GameManager : MonoBehaviour
             IsGamePaused = false;
             PauseMenu.SetActive(false);
             Time.timeScale = 1f;
+            //WeaponContainers.Instance.gameObject.SetActive(false);
         }
         else
         {
             IsGamePaused = true;
             PauseMenu.SetActive(true);
             Time.timeScale = 0f;
+            //WeaponContainers.Instance.gameObject.SetActive(true);
         }
     }
 

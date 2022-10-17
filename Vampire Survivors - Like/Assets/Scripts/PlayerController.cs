@@ -5,6 +5,8 @@ public class PlayerController : MonoBehaviour
 {
     public Vector2 Movement { get; private set; }
 
+    [SerializeField] private Animator animator;
+
     [SerializeField] private float _speed = 5f;
 
     private float _horizontalInput;
@@ -14,6 +16,8 @@ public class PlayerController : MonoBehaviour
     {
         _horizontalInput = Input.GetAxisRaw("Horizontal");
         _verticalInput = Input.GetAxisRaw("Vertical");
+
+        animator.SetFloat("Speed_f", Mathf.Abs(new Vector2(_horizontalInput, _verticalInput).magnitude));
 
         if (Input.GetKeyDown(KeyCode.F)) //Increment game stage
         {
