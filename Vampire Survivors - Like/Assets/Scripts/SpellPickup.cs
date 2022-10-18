@@ -3,22 +3,30 @@ using UnityEngine.Events;
 
 public class SpellPickup : MonoBehaviour
 {
+    private bool _canPickup = false;
+
     private void Awake()
     {
         Physics2D.SetLayerCollisionMask(gameObject.layer, LayerMask.GetMask("Player"));
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.E))
+        if (_canPickup && Input.GetKeyDown(KeyCode.E))
         {
             Pickup();
-        }
+        }    
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Can pickup!");
+        Debug.Log("Can pickup!1!");
+        _canPickup = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        _canPickup = false;
     }
 
     private void Pickup()
