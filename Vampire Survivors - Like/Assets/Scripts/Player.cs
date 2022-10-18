@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     public float CurrentMana { get; private set; }
     public float MaxMana { get; private set; } = 100f;
     public float CurrentHealth { get; private set; }
-    public float MaxHealth { get; private set; } = 200f;
+    public float MaxHealth { get; private set; } = 100f;
     public float HpPerSecond { get; set; } = 5f;
     public float ManaPerSecond { get; set; } = 20f;
 
@@ -103,7 +103,6 @@ public class Player : MonoBehaviour
             Lvl++;
 
             OnPlayerLvlUp.Invoke();
-            //LVLUPS!!
         }
         OnPlayerChangeXp.Invoke();
     }

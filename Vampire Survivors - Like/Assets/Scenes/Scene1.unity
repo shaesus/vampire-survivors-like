@@ -6118,6 +6118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PauseMenu: {fileID: 1084409204}
+  _scoreAddCoefficient: 10
 --- !u!4 &901328348
 Transform:
   m_ObjectHideFlags: 0

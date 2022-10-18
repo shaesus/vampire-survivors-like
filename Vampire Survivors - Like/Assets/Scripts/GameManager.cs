@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public int Score { get; private set; }
     public int ScoreToNextStage { get; private set; } = 10;
 
+    [SerializeField] private int _scoreAddCoefficient = 10;
+
     private int _maxStage;
 
     private void Awake()
@@ -44,7 +46,8 @@ public class GameManager : MonoBehaviour
         if (Stage < _maxStage)
         {
             Stage++;
-            ScoreToNextStage += (int)(ScoreToNextStage * 1.1f);
+            ScoreToNextStage += _scoreAddCoefficient;
+            _scoreAddCoefficient = (int)(_scoreAddCoefficient * 1.3f);
             GlobalEventManager.SendOnGameStageChanged();
         }
     }

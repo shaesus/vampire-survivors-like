@@ -12,10 +12,16 @@ public class XPBar : MonoBehaviour
         UpdateXPBar();
 
         Player.Instance.OnPlayerChangeXp.AddListener(UpdateXPBar);
+        Player.Instance.OnPlayerLvlUp.AddListener(UpdateSliderMaxValue);
     }
 
     private void UpdateXPBar()
     {
         _slider.value = Player.Instance.CurrentXP;
+    }
+
+    private void UpdateSliderMaxValue()
+    {
+        _slider.maxValue = Player.Instance.XPForNextLevel;
     }
 }

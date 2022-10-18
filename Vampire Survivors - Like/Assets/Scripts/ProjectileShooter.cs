@@ -44,6 +44,6 @@ public class ProjectileShooter : Weapon
     public override void LvlUp()
     {
         _lvl++;
-        _damage *= 1.1f;
+        _damage *= 1.05f;
     }
 }
