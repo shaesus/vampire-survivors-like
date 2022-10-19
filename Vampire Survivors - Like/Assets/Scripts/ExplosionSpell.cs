@@ -11,7 +11,8 @@ public class ExplosionSpell : Spell
     private void Awake()
     {
         _castCooldown = 3f;
-        _manaCost = 40f;
+        ManaCost = 40f;
+        Name = "Explosion Spell";
     }
 
     private void Start()
@@ -21,43 +22,30 @@ public class ExplosionSpell : Spell
 
     public override void Cast()
     {
-        if (_canCast && Player.Instance.CurrentMana >= _manaCost)
+        var explosion = Instantiate(Player.Instance.GetComponent<PlayerCombat>().ExplosionEffect,
+            Player.Instance.transform.position, Quaternion.identity);
+        explosion.transform.localScale = Vector3.one * Radius;
+        Destroy(explosion, 1.2f);
+
+        var enemies = Physics2D.OverlapCircleAll(Player.Instance.transform.position, Radius)
+            .Where(obj => obj.TryGetComponent(out Enemy enemy))
+            .Select(obj => obj.GetComponent<Enemy>());
+
+        foreach (var enemy in enemies)
         {
-            var explosion = Instantiate(Player.Instance.GetComponent<PlayerCombat>().ExplosionEffect,
-                Player.Instance.transform.position, Quaternion.identity);
-            explosion.transform.localScale = Vector3.one * Radius;
-            Destroy(explosion, 1.2f);
-
-            var enemies = Physics2D.OverlapCircleAll(Player.Instance.transform.position, Radius)
-                .Where(obj => obj.TryGetComponent(out Enemy enemy))
-                .Select(obj => obj.GetComponent<Enemy>());
-
-            foreach (var enemy in enemies)
-            {
-                enemy.TakeDamage(Damage);
-                enemy.gameObject.GetComponent<Rigidbody2D>().AddForce((enemy.transform.position
-                    - Player.Instance.transform.position).normalized * Force, ForceMode2D.Impulse);
-            }
-
-            StartCoroutine(StartCooldown());
-
-            Player.Instance.DecreaseMana(_manaCost);
+            enemy.TakeDamage(Damage);
+            enemy.gameObject.GetComponent<Rigidbody2D>().AddForce((enemy.transform.position
+                - Player.Instance.transform.position).normalized * Force, ForceMode2D.Impulse);
         }
-        else if (Player.Instance.CurrentMana < _manaCost)
-        {
-            Debug.Log("Not enough mana!");
-        }
-        else
-        {
-            Debug.Log("Cast CD!");
-        }
+
+        StartCoroutine(StartCooldown());
     }
 
     private IEnumerator StartCooldown()
     {
-        _canCast = false;
+        CanCast = false;
         yield return new WaitForSeconds(_castCooldown);
-        _canCast = true;
+        CanCast = true;
     }
 
     public override void LvlUp()

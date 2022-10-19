@@ -6,6 +6,7 @@ public class HUD : MonoBehaviour
     public static HUD Instance { get; private set; }
 
     public GameObject OptionsMenu;
+    public GameObject SpellChoiceMenu;
 
     public Sprite DashSpellSprite;
     public Sprite ExplosionSpellSprite;

@@ -4,10 +4,14 @@ public abstract class Spell : MonoBehaviour
 {
     public Sprite SpellSprite { get; set; }
 
-    protected float _castCooldown;
-    protected float _manaCost;
+    public float ManaCost { get; protected set; }
 
-    protected bool _canCast = true;
+    public string Name { get; protected set; }
+    public string Discription { get; protected set; }
+
+    public bool CanCast { get; protected set; } = true;
+
+    protected float _castCooldown;
 
     protected int _lvl = 1;
 

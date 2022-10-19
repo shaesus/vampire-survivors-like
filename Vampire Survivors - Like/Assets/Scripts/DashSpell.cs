@@ -15,7 +15,8 @@ public class DashSpell : Spell
     private void Awake()
     {
         _castCooldown = 1f;
-        _manaCost = 20f;
+        ManaCost = 20f;
+        Name = "Dash Spell";
     }
 
     private void Start()
@@ -30,20 +31,12 @@ public class DashSpell : Spell
 
     public override void Cast()
     {
-        if (_canCast && Player.Instance.CurrentMana >= _manaCost)
-        {
-            StartCoroutine(Dash());
-            Player.Instance.DecreaseMana(_manaCost);
-        }
-        else if (Player.Instance.CurrentMana <= _manaCost)
-        {
-            Debug.Log("Not enough mana!");
-        }
+        StartCoroutine(Dash());
     }
 
     private IEnumerator Dash()
     {
-        _canCast = false;
+        CanCast = false;
 
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),
             LayerMask.NameToLayer("Enemy"));
@@ -69,7 +62,7 @@ public class DashSpell : Spell
 
         yield return new WaitForSeconds(_castCooldown);
 
-        _canCast = true;
+        CanCast = true;
     }
 
     private void SpawnTrail(GameObject dashTrail)

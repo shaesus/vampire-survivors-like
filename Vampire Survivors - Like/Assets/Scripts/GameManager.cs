@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public GameObject PauseMenu;
     public GameObject LoseVictoryMenu;
 
-    public bool IsGamePaused { get; private set; } = false;
+    public bool IsGamePaused { get; set; } = false;
 
     public int Stage { get; private set; }
     public int Score { get; private set; }

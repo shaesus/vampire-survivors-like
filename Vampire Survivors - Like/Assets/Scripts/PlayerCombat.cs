@@ -57,13 +57,19 @@ public class PlayerCombat : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Space) && Spells[0] != null)
             {
-                Spells[0].Cast();
-                Debug.Log("Spell 1 casted");
+                if (Spells[0].CanCast && Player.Instance.CurrentMana >= Spells[0].ManaCost)
+                {
+                    Spells[0].Cast();
+                    Player.Instance.DecreaseMana(Spells[0].ManaCost);
+                }
             }
             else if (Input.GetKeyDown(KeyCode.LeftShift) && Spells[1] != null)
             {
-                Spells[1].Cast();
-                Debug.Log("Spell 2 casted");
+                if (Spells[1].CanCast && Player.Instance.CurrentMana >= Spells[1].ManaCost)
+                {
+                    Spells[1].Cast();
+                    Player.Instance.DecreaseMana(Spells[1].ManaCost);
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.C))
@@ -76,5 +82,14 @@ public class PlayerCombat : MonoBehaviour
     private void SwitchSpells()
     {
         (Spells[0], Spells[1]) = (Spells[1], Spells[0]);
+    }
+
+    public void AddSpell(Spell spell, int position)
+    {
+        HUD.Instance.SpellImages[position].gameObject.SetActive(true);
+
+        Spells[position] = (Spell)Player.Instance.gameObject.AddComponent(spell.GetType());
+
+        HUD.Instance.SpellImages[position].sprite = spell.SpellSprite;
     }
 }

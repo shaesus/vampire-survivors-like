@@ -4,14 +4,15 @@ using UnityEngine;
 public class SpeedUpSpell : Spell
 {
     private float _speedUpMultiplier = 3f;
-    private float _speedUpTime = 3f;
+    private float _speedUpTime = 10f;
 
     private PlayerController _playerController;
 
     private void Awake()
     {
-        _castCooldown = 1f;
-        _manaCost = 70f;
+        _castCooldown = 30f;
+        ManaCost = 70f;
+        Name = "Speed-Up Spell";
     }
 
     private void Start()
@@ -23,23 +24,20 @@ public class SpeedUpSpell : Spell
 
     public override void Cast()
     {
-        if (_canCast)
-        {
-            StartCoroutine(StartSpeedUp());
-        }
+        StartCoroutine(StartSpeedUp());
     }
 
     private IEnumerator StartCooldown()
     {
         yield return new WaitForSeconds(_castCooldown);
-        _canCast = true;
+        CanCast = true;
         Debug.Log("Can SpeedUp");
     }
 
     private IEnumerator StartSpeedUp()
     {
         _playerController.ChangeSpeed(_speedUpMultiplier);
-        _canCast = false;
+        CanCast = false;
         yield return new WaitForSeconds(_speedUpTime);
         StartCoroutine(StartCooldown());
         _playerController.SetDefaultSpeed();

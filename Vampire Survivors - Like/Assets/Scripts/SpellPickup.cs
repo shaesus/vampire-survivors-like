@@ -41,45 +41,33 @@ public class SpellPickup : MonoBehaviour
 
     private void Pickup()
     {
+        var playerCombat = Player.Instance.GetComponent<PlayerCombat>();
+
         if (_playerSpells[0] == null)
         {
-            InitialiseSpell(0);
+            playerCombat.AddSpell(spell, 0);
         }
         else if (_playerSpells[1] == null)
         {
-            InitialiseSpell(1);
+            playerCombat.AddSpell(spell, 1);
         }
         else
         {
             //UI choice
+            ChooseSpell();
         }
+
         Destroy(gameObject);
     }
 
-    private void InitialiseSpell(int position)
+    private void ChooseSpell()
     {
-        HUD.Instance.SpellImages[position].gameObject.SetActive(true);
+        var spellChoiceMenu = HUD.Instance.SpellChoiceMenu;
+        spellChoiceMenu.SetActive(true);
+        spellChoiceMenu.GetComponent<SpellChoiceMenu>().ChoosingSpell = spell;
+        spellChoiceMenu.GetComponent<SpellChoiceMenu>().InitializeContainers();
 
-        if (CompareTag("ExplosionPickup"))
-        {
-            var explosionSpell = Player.Instance.gameObject.AddComponent<ExplosionSpell>();
-
-            _playerSpells[position] = explosionSpell;
-        }
-        else if (CompareTag("DashPickup"))
-        {
-            var dashSpell = Player.Instance.gameObject.AddComponent<DashSpell>();
-
-            _playerSpells[position] = dashSpell;
-        }
-        else if (CompareTag("SpeedUpPickup"))
-        {
-            var speedUpSpell = Player.Instance.gameObject.AddComponent<SpeedUpSpell>();
-
-            _playerSpells[position] = speedUpSpell;
-            Debug.Log("SU");
-        }
-
-        HUD.Instance.SpellImages[position].sprite = spell.SpellSprite;
+        Time.timeScale = 0f;
+        GameManager.Instance.IsGamePaused = true;
     }
 }
