@@ -5,6 +5,8 @@ public class HUD : MonoBehaviour
 {
     public static HUD Instance { get; private set; }
 
+    public GameObject OptionsMenu;
+
     public Sprite DashSpellSprite;
     public Sprite ExplosionSpellSprite;
 
@@ -59,5 +61,15 @@ public class HUD : MonoBehaviour
             }
             Debug.Log("1 NULL");
         }
+    }
+
+    public void OpenOptionsMenu()
+    {
+        OptionsMenu.SetActive(true);
+    }
+
+    public void CloseOptionsMenu()
+    {
+        OptionsMenu.SetActive(false);
     }
 }

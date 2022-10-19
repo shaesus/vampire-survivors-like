@@ -4,6 +4,9 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    public GameObject OptionsMenu;
+    public GameObject Menu;
+
     [SerializeField] private Animator[] _mainMenuEnemiesAnimators;
     [SerializeField] private Animator _fadingPanelAnimator;
 
@@ -33,6 +36,18 @@ public class MainMenu : MonoBehaviour
         {
             animator.SetTrigger("Attack");
         }
+    }
+
+    public void OpenOptionsMenu()
+    {
+        Menu.SetActive(false);
+        OptionsMenu.SetActive(true);
+    }
+
+    public void ReturnBackToMainMenu()
+    {
+        OptionsMenu.SetActive(false);
+        Menu.SetActive(true);
     }
 
     public void QuitGame()

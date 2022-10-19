@@ -4,8 +4,6 @@ using System.Collections;
 
 public class ExplosionSpell : Spell
 {
-    public Sprite SpellSprite { get; set; }
-
     public float Radius { get; set; } = 3f;
     public float Damage { get; set; } = 25f;
     public float Force { get; set; } = 50f;
@@ -17,7 +15,7 @@ public class ExplosionSpell : Spell
 
     private int _lvl = 1;
 
-    public void Cast()
+    public override void Cast()
     {
         if (_canCast && Player.Instance.CurrentMana >= _manaCost)
         {

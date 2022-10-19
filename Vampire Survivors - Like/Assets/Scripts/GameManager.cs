@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
     public GameObject PauseMenu;
+    public GameObject LoseVictoryMenu;
 
     public bool IsGamePaused { get; private set; } = false;
 
@@ -15,7 +17,14 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private int _scoreAddCoefficient = 10;
 
+    [SerializeField] private TextMeshProUGUI _timeText;
+    [SerializeField] private TextMeshProUGUI _loseVictoryText;
+
     private int _maxStage;
+
+    private float _timeSinceGameStart = 0;
+
+    private bool _isGameEnded = false;
 
     private void Awake()
     {
@@ -41,6 +50,11 @@ public class GameManager : MonoBehaviour
         _maxStage = EnemySpawner.Instance.Enemies.GetLength(0);
     }
 
+    private void Update()
+    {
+        _timeSinceGameStart += Time.deltaTime;
+    }
+
     public void IncrementStage()
     {
         if (Stage < _maxStage)
@@ -56,6 +70,11 @@ public class GameManager : MonoBehaviour
     {
         Score++;
 
+        if (Score >= 300)
+        {
+            WinGame();
+        }
+
         if (Stage < _maxStage && Score >= ScoreToNextStage)
         {
             IncrementStage();
@@ -66,7 +85,12 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //Win Game
+        LoseVictoryMenu.SetActive(true);
+        _loseVictoryText.text = "YOU LOST!";
+        _isGameEnded = true;
+        Time.timeScale = 0f;
+        _timeText.text = "time: " + _timeSinceGameStart.ToString();
     }
 
     public void LvlUpAllWeaponsAndSpells()
@@ -92,25 +116,42 @@ public class GameManager : MonoBehaviour
 
     public void TogglePauseGame()
     {
-        if (PauseMenu.activeSelf == true)
+        if ((PauseMenu.activeSelf == true || LoseVictoryMenu.activeSelf == true)
+            && _isGameEnded == false)
         {
             IsGamePaused = false;
+            HUD.Instance.OptionsMenu.SetActive(false);
             PauseMenu.SetActive(false);
             Time.timeScale = 1f;
-            //WeaponContainers.Instance.gameObject.SetActive(false);
         }
-        else
+        else if (PauseMenu.activeSelf == false && _isGameEnded == false)
         {
             IsGamePaused = true;
             PauseMenu.SetActive(true);
             Time.timeScale = 0f;
-            //WeaponContainers.Instance.gameObject.SetActive(true);
         }
     }
 
     public void RestartGame()
     {
+        _isGameEnded = false;
         TogglePauseGame();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void WinGame()
+    {
+        //Win Game
+        LoseVictoryMenu.SetActive(true);
+        _loseVictoryText.text = "YOU WON!";
+        _isGameEnded = true;
+        Time.timeScale = 0f;
+        _timeText.text = "time: " + _timeSinceGameStart.ToString();
+    }
+
+    public void ExitToMainMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(0);
     }
 }

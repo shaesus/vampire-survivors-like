@@ -33,6 +33,16 @@ public class PlayerController : MonoBehaviour
         {
             GameManager.Instance.TogglePauseGame();
         }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            GameManager.Instance.WinGame();
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            GameManager.Instance.EndGame();
+        }
     }
 
     private void FixedUpdate()

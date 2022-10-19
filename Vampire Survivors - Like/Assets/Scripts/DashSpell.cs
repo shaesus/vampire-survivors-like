@@ -5,8 +5,6 @@ public class DashSpell : Spell
 {
     public float DashForce { get; set; } = 55f;
 
-    public Sprite SpellSprite { get; set; }
-
     private bool _canDash = true;
 
     private float _dashingTime = 0.5f;
@@ -26,7 +24,7 @@ public class DashSpell : Spell
         _playerCombat = _playerInstance.gameObject.GetComponent<PlayerCombat>();
     }
 
-    public void Cast()
+    public override void Cast()
     {
         if (_canDash && Player.Instance.CurrentMana >= _manaCost)
         {
