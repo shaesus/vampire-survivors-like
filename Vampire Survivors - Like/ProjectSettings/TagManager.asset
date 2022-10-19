@@ -9,6 +9,7 @@ TagManager:
   - ExplosionPickup
   - DashPickup
   - SwordPickup
+  - SpeedUpPickup
   layers:
   - Default
   - TransparentFX

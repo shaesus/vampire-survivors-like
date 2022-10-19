@@ -27,12 +27,17 @@ public class ProjectileShooter : Weapon
         {
             var projectile = Instantiate(Prefab, (Vector2)transform.position + playerCombat.LookDirection,
                 playerCombat.ShootPoint.transform.rotation).GetComponent<Projectile>();
+
             projectile.Damage = _damage;
+
             projectile.transform.localScale = Vector3.one * Mathf.Pow(1.1f, _lvl - 1);
+
             var rb = projectile.GetComponent<Rigidbody2D>();
             rb.AddForce(playerCombat.LookDirection * projectile.Speed,
                 ForceMode2D.Impulse);
-            Destroy(projectile, 3f);
+
+            Destroy(projectile.gameObject, 3f);
+
             StartCoroutine(ShootCooldown());
         }
         else

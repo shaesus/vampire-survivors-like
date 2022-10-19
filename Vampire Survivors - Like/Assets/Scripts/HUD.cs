@@ -9,6 +9,7 @@ public class HUD : MonoBehaviour
 
     public Sprite DashSpellSprite;
     public Sprite ExplosionSpellSprite;
+    public Sprite SpeedUpSpellSprite;
 
     public Image[] SpellImages;
 

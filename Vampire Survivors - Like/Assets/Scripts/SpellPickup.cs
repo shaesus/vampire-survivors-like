@@ -1,13 +1,23 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 public class SpellPickup : MonoBehaviour
 {
     private bool _canPickup = false;
 
+    private Spell spell;
+
+    private Spell[] _playerSpells;
+
     private void Awake()
     {
         Physics2D.SetLayerCollisionMask(gameObject.layer, LayerMask.GetMask("Player"));
+
+        spell = GetComponent<Spell>();
+    }
+
+    private void Start()
+    {
+        _playerSpells = Player.Instance.GetComponent<PlayerCombat>().Spells;
     }
 
     private void Update()
@@ -31,14 +41,13 @@ public class SpellPickup : MonoBehaviour
 
     private void Pickup()
     {
-        var playerSpells = Player.Instance.GetComponent<PlayerCombat>().Spells;
-        if (playerSpells[0] == null)
+        if (_playerSpells[0] == null)
         {
-            InitialiseSpell(ref playerSpells[0], 0);
+            InitialiseSpell(0);
         }
-        else if (playerSpells[1] == null)
+        else if (_playerSpells[1] == null)
         {
-            InitialiseSpell(ref playerSpells[1], 1);
+            InitialiseSpell(1);
         }
         else
         {
@@ -47,7 +56,7 @@ public class SpellPickup : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void InitialiseSpell(ref UnityAction action, int position)
+    private void InitialiseSpell(int position)
     {
         HUD.Instance.SpellImages[position].gameObject.SetActive(true);
 
@@ -55,17 +64,22 @@ public class SpellPickup : MonoBehaviour
         {
             var explosionSpell = Player.Instance.gameObject.AddComponent<ExplosionSpell>();
 
-            HUD.Instance.SpellImages[position].sprite = HUD.Instance.ExplosionSpellSprite;
-
-            action = explosionSpell.Cast;
+            _playerSpells[position] = explosionSpell;
         }
         else if (CompareTag("DashPickup"))
         {
             var dashSpell = Player.Instance.gameObject.AddComponent<DashSpell>();
 
-            HUD.Instance.SpellImages[position].sprite = HUD.Instance.DashSpellSprite;
-
-            action = dashSpell.Cast;
+            _playerSpells[position] = dashSpell;
         }
+        else if (CompareTag("SpeedUpPickup"))
+        {
+            var speedUpSpell = Player.Instance.gameObject.AddComponent<SpeedUpSpell>();
+
+            _playerSpells[position] = speedUpSpell;
+            Debug.Log("SU");
+        }
+
+        HUD.Instance.SpellImages[position].sprite = spell.SpellSprite;
     }
 }

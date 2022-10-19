@@ -11,7 +11,7 @@ public class PlayerCombat : MonoBehaviour
     public GameObject MeleeAttackTrail;
     public GameObject ExplosionEffect;
 
-    public UnityAction[] Spells { get; set; }
+    public Spell[] Spells { get; set; }
 
     public Vector2 LookDirection { get; private set; }
 
@@ -25,7 +25,7 @@ public class PlayerCombat : MonoBehaviour
 
         _shootPointRb = ShootPoint.GetComponent<Rigidbody2D>();
 
-        Spells = new UnityAction[2] { null, null };
+        Spells = new Spell[2] { null, null };
 
         OnSpellSwitch.AddListener(SwitchSpells);
     }
@@ -57,12 +57,12 @@ public class PlayerCombat : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Space) && Spells[0] != null)
             {
-                Spells[0].Invoke();
+                Spells[0].Cast();
                 Debug.Log("Spell 1 casted");
             }
             else if (Input.GetKeyDown(KeyCode.LeftShift) && Spells[1] != null)
             {
-                Spells[1].Invoke();
+                Spells[1].Cast();
                 Debug.Log("Spell 2 casted");
             }
 

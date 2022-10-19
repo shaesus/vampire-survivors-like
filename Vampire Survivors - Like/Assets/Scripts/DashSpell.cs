@@ -5,11 +5,7 @@ public class DashSpell : Spell
 {
     public float DashForce { get; set; } = 55f;
 
-    private bool _canDash = true;
-
     private float _dashingTime = 0.5f;
-    private float _dashingCooldown = 1f;
-    private float _manaCost = 20f;
 
     private Player _playerInstance;
     private PlayerController _playerController;
@@ -18,15 +14,23 @@ public class DashSpell : Spell
 
     private void Awake()
     {
+        _castCooldown = 1f;
+        _manaCost = 20f;
+    }
+
+    private void Start()
+    {
         _playerInstance = Player.Instance;
         _playerRb = _playerInstance.GetComponent<Rigidbody2D>();
         _playerController = _playerInstance.GetComponent<PlayerController>();
         _playerCombat = _playerInstance.gameObject.GetComponent<PlayerCombat>();
+
+        SpellSprite = HUD.Instance.DashSpellSprite;
     }
 
     public override void Cast()
     {
-        if (_canDash && Player.Instance.CurrentMana >= _manaCost)
+        if (_canCast && Player.Instance.CurrentMana >= _manaCost)
         {
             StartCoroutine(Dash());
             Player.Instance.DecreaseMana(_manaCost);
@@ -39,7 +43,7 @@ public class DashSpell : Spell
 
     private IEnumerator Dash()
     {
-        _canDash = false;
+        _canCast = false;
 
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),
             LayerMask.NameToLayer("Enemy"));
@@ -63,9 +67,9 @@ public class DashSpell : Spell
         Physics2D.SetLayerCollisionMask(LayerMask.NameToLayer("Player"),
             Physics2D.AllLayers);
 
-        yield return new WaitForSeconds(_dashingCooldown);
+        yield return new WaitForSeconds(_castCooldown);
 
-        _canDash = true;
+        _canCast = true;
     }
 
     private void SpawnTrail(GameObject dashTrail)
@@ -105,6 +109,7 @@ public class DashSpell : Spell
 
     public override void LvlUp()
     {
+        _lvl++;
         DashForce *= 1.1f;
     }
 }

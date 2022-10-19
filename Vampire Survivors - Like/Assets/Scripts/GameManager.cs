@@ -2,6 +2,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
+public enum GameEndStates
+{
+    Win,
+    Lose
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -72,7 +78,7 @@ public class GameManager : MonoBehaviour
 
         if (Score >= 300)
         {
-            WinGame();
+            EndGame(GameEndStates.Win);
         }
 
         if (Stage < _maxStage && Score >= ScoreToNextStage)
@@ -83,14 +89,24 @@ public class GameManager : MonoBehaviour
         GlobalEventManager.SendOnScoreChanged();
     }
 
-    public void EndGame()
+    public void EndGame(GameEndStates state)
     {
-        //Win Game
-        LoseVictoryMenu.SetActive(true);
-        _loseVictoryText.text = "YOU LOST!";
-        _isGameEnded = true;
-        Time.timeScale = 0f;
-        _timeText.text = "time: " + _timeSinceGameStart.ToString();
+        if (state == GameEndStates.Lose)
+        {
+            LoseVictoryMenu.SetActive(true);
+            _loseVictoryText.text = "YOU LOST!";
+            _isGameEnded = true;
+            Time.timeScale = 0f;
+            _timeText.text = "time: " + _timeSinceGameStart.ToString();
+        }
+        else
+        {
+            LoseVictoryMenu.SetActive(true);
+            _loseVictoryText.text = "YOU WON!";
+            _isGameEnded = true;
+            Time.timeScale = 0f;
+            _timeText.text = "time: " + _timeSinceGameStart.ToString();
+        }
     }
 
     public void LvlUpAllWeaponsAndSpells()
@@ -137,16 +153,6 @@ public class GameManager : MonoBehaviour
         _isGameEnded = false;
         TogglePauseGame();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    public void WinGame()
-    {
-        //Win Game
-        LoseVictoryMenu.SetActive(true);
-        _loseVictoryText.text = "YOU WON!";
-        _isGameEnded = true;
-        Time.timeScale = 0f;
-        _timeText.text = "time: " + _timeSinceGameStart.ToString();
     }
 
     public void ExitToMainMenu()

@@ -7,13 +7,17 @@ public class ExplosionSpell : Spell
     public float Radius { get; set; } = 3f;
     public float Damage { get; set; } = 25f;
     public float Force { get; set; } = 50f;
-    public float CastCooldown { get; set; } = 3f;
 
-    private bool _canCast = true;
+    private void Awake()
+    {
+        _castCooldown = 3f;
+        _manaCost = 40f;
+    }
 
-    private float _manaCost = 40f;
-
-    private int _lvl = 1;
+    private void Start()
+    {
+        SpellSprite = HUD.Instance.ExplosionSpellSprite;
+    }
 
     public override void Cast()
     {
@@ -52,7 +56,7 @@ public class ExplosionSpell : Spell
     private IEnumerator StartCooldown()
     {
         _canCast = false;
-        yield return new WaitForSeconds(CastCooldown);
+        yield return new WaitForSeconds(_castCooldown);
         _canCast = true;
     }
 

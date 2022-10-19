@@ -150,7 +150,7 @@ public class Player : MonoBehaviour
     {
         Debug.Log(gameObject.name + " died!");
 
-        GameManager.Instance.EndGame();
+        GameManager.Instance.EndGame(GameEndStates.Lose);
     }
 
     public void DecreaseMana(float manaCost)

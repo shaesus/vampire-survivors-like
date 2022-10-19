@@ -7,10 +7,16 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Animator animator;
 
-    [SerializeField] private float _speed = 5f;
+    [SerializeField] private float _defaultSpeed = 5f;
+    private float _speed;
 
     private float _horizontalInput;
     private float _verticalInput;
+
+    private void Awake()
+    {
+        SetDefaultSpeed();
+    }
 
     private void Update()
     {
@@ -36,13 +42,23 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.L))
         {
-            GameManager.Instance.WinGame();
+            GameManager.Instance.EndGame(GameEndStates.Win);
         }
 
         if (Input.GetKeyDown(KeyCode.K))
         {
-            GameManager.Instance.EndGame();
+            GameManager.Instance.EndGame(GameEndStates.Lose);
         }
+    }
+
+    public void ChangeSpeed(float coefficient)
+    {
+        _speed *= coefficient;
+    }
+
+    public void SetDefaultSpeed()
+    {
+        _speed = _defaultSpeed;
     }
 
     private void FixedUpdate()
