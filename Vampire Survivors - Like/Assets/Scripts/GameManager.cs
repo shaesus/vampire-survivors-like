@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
+using DG.Tweening;
+using System.Collections.Generic;
 
 public enum GameEndStates
 {
@@ -15,7 +18,11 @@ public class GameManager : MonoBehaviour
     public GameObject PauseMenu;
     public GameObject LoseVictoryMenu;
 
+    public List<GameObject> WeaponPickups;
+    public List<GameObject> SpellPickups;
+
     public bool IsGamePaused { get; set; } = false;
+    public bool IsChoosingSpell { get; set; } = false;
 
     public int Stage { get; private set; }
     public int Score { get; private set; }
@@ -54,6 +61,11 @@ public class GameManager : MonoBehaviour
         GlobalEventManager.SendOnGameStageChanged();
 
         _maxStage = EnemySpawner.Instance.Enemies.GetLength(0);
+
+        var randomWeapon = WeaponPickups[Random.Range(0, WeaponPickups.Count)];
+        Instantiate(randomWeapon, new Vector3(0, 3, 0),
+            Quaternion.identity);
+        WeaponPickups.Remove(randomWeapon);
     }
 
     private void Update()
@@ -91,20 +103,19 @@ public class GameManager : MonoBehaviour
 
     public void EndGame(GameEndStates state)
     {
+        LoseVictoryMenu.GetComponent<Image>().DOFade(150f / 255f, 0.2f).SetUpdate(true);
+        LoseVictoryMenu.SetActive(true);
+        _isGameEnded = true;
+        Time.timeScale = 0f;
+
         if (state == GameEndStates.Lose)
         {
-            LoseVictoryMenu.SetActive(true);
             _loseVictoryText.text = "YOU LOST!";
-            _isGameEnded = true;
-            Time.timeScale = 0f;
             _timeText.text = "time: " + _timeSinceGameStart.ToString();
         }
         else
         {
-            LoseVictoryMenu.SetActive(true);
             _loseVictoryText.text = "YOU WON!";
-            _isGameEnded = true;
-            Time.timeScale = 0f;
             _timeText.text = "time: " + _timeSinceGameStart.ToString();
         }
     }
@@ -137,13 +148,19 @@ public class GameManager : MonoBehaviour
         {
             IsGamePaused = false;
             HUD.Instance.OptionsMenu.SetActive(false);
+            PauseMenu.GetComponent<Image>().DOFade(0, 0f).SetUpdate(true);
             PauseMenu.SetActive(false);
-            Time.timeScale = 1f;
+
+            if (IsChoosingSpell == false)
+            {
+                Time.timeScale = 1f;
+            }
         }
         else if (PauseMenu.activeSelf == false && _isGameEnded == false)
         {
             IsGamePaused = true;
             PauseMenu.SetActive(true);
+            PauseMenu.GetComponent<Image>().DOFade(150f / 255f, 0.2f).SetUpdate(true);
             Time.timeScale = 0f;
         }
     }

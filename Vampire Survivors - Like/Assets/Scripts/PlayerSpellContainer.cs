@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 public class PlayerSpellContainer : SpellContainer, IPointerEnterHandler, IPointerDownHandler
 {
@@ -30,8 +31,9 @@ public class PlayerSpellContainer : SpellContainer, IPointerEnterHandler, IPoint
     public void OnPointerEnter(PointerEventData eventData)
     {
         var container = _spellChoiceMenu.ChoosingContainer;
-        container.transform.position = new Vector3(eventData.pointerEnter.transform.position.x,
-            container.transform.position.y, container.transform.position.z);
+
+        container.transform.DOMoveX(eventData.pointerEnter.transform.position.x, 0.2f).SetUpdate(true);
+
         Debug.Log(eventData.pointerEnter.gameObject.name);
     }
 }

@@ -69,5 +69,6 @@ public class SpellPickup : MonoBehaviour
 
         Time.timeScale = 0f;
         GameManager.Instance.IsGamePaused = true;
+        GameManager.Instance.IsChoosingSpell = true;
     }
 }

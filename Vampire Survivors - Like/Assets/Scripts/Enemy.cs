@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Linq;
 
 public class Enemy : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class Enemy : MonoBehaviour
     protected float _currentHealth;
     protected float _timeForNextDamage = 0f;
     protected float _damageDelay = 2f;
+    protected float _pickupSpawnChance = 0.1f;
 
     protected Vector2 _movement;
 
@@ -35,6 +37,7 @@ public class Enemy : MonoBehaviour
     {
         _currentHealth = _maxHealth;
 
+        OnEnemyDie.AddListener(SpawnPickup);
         OnEnemyDie.AddListener(Die);
     }
 
@@ -145,5 +148,34 @@ public class Enemy : MonoBehaviour
             playerComp.TakeDamage(Damage);
             _timeForNextDamage = Time.time + _damageDelay;
         } //Take damage multiple times as enemy touches player
+    }
+
+    protected void SpawnPickup()
+    {
+        if (Random.value < 1f - _pickupSpawnChance)
+        {
+            return;
+        }
+
+        var gameManager = GameManager.Instance;
+        
+        if (gameManager.SpellPickups.Count == 0 && gameManager.WeaponPickups.Count == 0)
+        {
+            return;
+        }
+
+        var pickups = gameManager.WeaponPickups.Concat(gameManager.SpellPickups).ToList();
+        var randomPickup = pickups[Random.Range(0, pickups.Count)];
+
+        Instantiate(randomPickup, transform.position, Quaternion.identity);
+
+        if (randomPickup.TryGetComponent<SpellPickup>(out var spellPickup))
+        {
+            gameManager.SpellPickups.Remove(randomPickup);
+        }
+        else if (randomPickup.TryGetComponent<Pickup>(out var weaponPickup))
+        {
+            gameManager.WeaponPickups.Remove(randomPickup);
+        }
     }
 }

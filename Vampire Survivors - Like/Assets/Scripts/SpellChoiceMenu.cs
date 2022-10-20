@@ -27,6 +27,7 @@ public class SpellChoiceMenu : MonoBehaviour
 
         Time.timeScale = 1f;
         GameManager.Instance.IsGamePaused = false;
+        GameManager.Instance.IsChoosingSpell = false;
 
         gameObject.SetActive(false);
     }
