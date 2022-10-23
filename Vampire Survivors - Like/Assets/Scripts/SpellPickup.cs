@@ -1,7 +1,12 @@
 using UnityEngine;
+using DG.Tweening;
 
 public class SpellPickup : MonoBehaviour
 {
+    [SerializeField] private GameObject _useKeyPrompt;
+
+    private Vector3 _promptDefaulPos;
+
     private bool _canPickup = false;
 
     private Spell spell;
@@ -13,6 +18,8 @@ public class SpellPickup : MonoBehaviour
         Physics2D.SetLayerCollisionMask(gameObject.layer, LayerMask.GetMask("Player"));
 
         spell = GetComponent<Spell>();
+
+        _promptDefaulPos = _useKeyPrompt.transform.position;
     }
 
     private void Start()
@@ -31,11 +38,17 @@ public class SpellPickup : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Can pickup!1!");
+
+        _useKeyPrompt.SetActive(true);
+
         _canPickup = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        _useKeyPrompt.SetActive(false);
+        _useKeyPrompt.transform.position = _promptDefaulPos;
+
         _canPickup = false;
     }
 
