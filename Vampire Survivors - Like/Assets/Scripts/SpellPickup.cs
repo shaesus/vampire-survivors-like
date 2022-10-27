@@ -3,13 +3,13 @@ using DG.Tweening;
 
 public class SpellPickup : MonoBehaviour
 {
-    [SerializeField] private GameObject _useKeyPrompt;
+    [SerializeField] private GameObject useKeyPrompt;
 
-    private Vector3 _promptDefaulPos;
+    private Vector3 _promptDefaultPos;
 
     private bool _canPickup = false;
 
-    private Spell spell;
+    private Spell _spell;
 
     private Spell[] _playerSpells;
 
@@ -17,9 +17,9 @@ public class SpellPickup : MonoBehaviour
     {
         Physics2D.SetLayerCollisionMask(gameObject.layer, LayerMask.GetMask("Player"));
 
-        spell = GetComponent<Spell>();
+        _spell = GetComponent<Spell>();
 
-        _promptDefaulPos = _useKeyPrompt.transform.position;
+        _promptDefaultPos = useKeyPrompt.transform.position;
     }
 
     private void Start()
@@ -39,15 +39,15 @@ public class SpellPickup : MonoBehaviour
     {
         Debug.Log("Can pickup!1!");
 
-        _useKeyPrompt.SetActive(true);
+        useKeyPrompt.SetActive(true);
 
         _canPickup = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        _useKeyPrompt.SetActive(false);
-        _useKeyPrompt.transform.position = _promptDefaulPos;
+        useKeyPrompt.SetActive(false);
+        useKeyPrompt.transform.position = _promptDefaultPos;
 
         _canPickup = false;
     }
@@ -58,11 +58,11 @@ public class SpellPickup : MonoBehaviour
 
         if (_playerSpells[0] == null)
         {
-            playerCombat.AddSpell(spell, 0);
+            playerCombat.AddSpell(_spell, 0);
         }
         else if (_playerSpells[1] == null)
         {
-            playerCombat.AddSpell(spell, 1);
+            playerCombat.AddSpell(_spell, 1);
         }
         else
         {
@@ -77,7 +77,7 @@ public class SpellPickup : MonoBehaviour
     {
         var spellChoiceMenu = HUD.Instance.SpellChoiceMenu;
         spellChoiceMenu.SetActive(true);
-        spellChoiceMenu.GetComponent<SpellChoiceMenu>().ChoosingSpell = spell;
+        spellChoiceMenu.GetComponent<SpellChoiceMenu>().ChoosingSpell = _spell;
         spellChoiceMenu.GetComponent<SpellChoiceMenu>().InitializeContainers();
 
         Time.timeScale = 0f;
