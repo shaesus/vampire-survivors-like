@@ -38,16 +38,17 @@ public class SpellPickup : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Can pickup!1!");
-
-        useKeyPrompt.SetActive(true);
-
+        
+        useKeyPrompt.GetComponent<SpriteRenderer>().DOFade(1, 0.1f);
+        useKeyPrompt.transform.DOLocalMoveY(0.67f, 0.2f);
+        
         _canPickup = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        useKeyPrompt.SetActive(false);
-        useKeyPrompt.transform.position = _promptDefaultPos;
+        useKeyPrompt.transform.DOLocalMoveY(0.1f, 0.2f);
+        useKeyPrompt.GetComponent<SpriteRenderer>().DOFade(0, 0.1f);
 
         _canPickup = false;
     }
