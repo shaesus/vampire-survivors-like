@@ -6,10 +6,18 @@ public class SpellChoiceMenu : MonoBehaviour
 
     public GameObject[] PlayerSpellCotainers;
 
+    public SpellPickup CurrentSpellPickup { get; private set; }
+
+    public GameObject ExplosionSpellPickup;
+    public GameObject DashSpellPickup;
+    public GameObject SpeedUpSpellPickup;
+
     public Spell ChoosingSpell { get; set; }
 
-    public void InitializeContainers()
+    public void InitializeContainers(SpellPickup spellPickup)
     {
+        CurrentSpellPickup = spellPickup;
+        
         var playerSpells = Player.Instance.GetComponent<PlayerCombat>().Spells;
 
         for (int i = 0; i < PlayerSpellCotainers.Length; i++)

@@ -39,8 +39,8 @@ public class SpellPickup : MonoBehaviour
     {
         Debug.Log("Can pickup!1!");
         
-        useKeyPrompt.GetComponent<SpriteRenderer>().DOFade(1, 0.1f);
         useKeyPrompt.transform.DOLocalMoveY(0.67f, 0.2f);
+        useKeyPrompt.GetComponent<SpriteRenderer>().DOFade(1, 0.1f);
         
         _canPickup = true;
     }
@@ -60,26 +60,31 @@ public class SpellPickup : MonoBehaviour
         if (_playerSpells[0] == null)
         {
             playerCombat.AddSpell(_spell, 0);
+            Destroy(gameObject);
         }
         else if (_playerSpells[1] == null)
         {
             playerCombat.AddSpell(_spell, 1);
+            Destroy(gameObject);
         }
         else
         {
             //UI choice
             ChooseSpell();
         }
-
-        Destroy(gameObject);
     }
 
+    private void OnDestroy()
+    {
+        DOTween.Kill(transform);
+    }
+    
     private void ChooseSpell()
     {
         var spellChoiceMenu = HUD.Instance.SpellChoiceMenu;
         spellChoiceMenu.SetActive(true);
         spellChoiceMenu.GetComponent<SpellChoiceMenu>().ChoosingSpell = _spell;
-        spellChoiceMenu.GetComponent<SpellChoiceMenu>().InitializeContainers();
+        spellChoiceMenu.GetComponent<SpellChoiceMenu>().InitializeContainers(this);
 
         Time.timeScale = 0f;
         GameManager.Instance.IsGamePaused = true;

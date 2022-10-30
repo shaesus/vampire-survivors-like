@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using DG.Tweening;
+using Unity.Mathematics;
 
 public class PlayerSpellContainer : SpellContainer, IPointerEnterHandler, IPointerDownHandler
 {
@@ -23,6 +24,26 @@ public class PlayerSpellContainer : SpellContainer, IPointerEnterHandler, IPoint
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        var currentSpellPickup = _spellChoiceMenu.CurrentSpellPickup;
+        
+        if (CurrentSpell is ExplosionSpell)
+        {
+            Instantiate(_spellChoiceMenu.ExplosionSpellPickup, currentSpellPickup.transform.position,
+                quaternion.identity);
+        }
+        else if (CurrentSpell is DashSpell)
+        {
+            Instantiate(_spellChoiceMenu.DashSpellPickup, currentSpellPickup.transform.position,
+                quaternion.identity);
+        }
+        else if (CurrentSpell is SpeedUpSpell)
+        {
+            Instantiate(_spellChoiceMenu.SpeedUpSpellPickup, currentSpellPickup.transform.position,
+                quaternion.identity);
+        }
+        
+        Destroy(currentSpellPickup.gameObject);
+        
         Player.Instance.GetComponent<PlayerCombat>()
             .AddSpell(_spellChoiceMenu.ChoosingSpell, _index);
         _spellChoiceMenu.EndChoice();
