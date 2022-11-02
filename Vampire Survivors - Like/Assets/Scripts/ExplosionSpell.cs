@@ -12,7 +12,13 @@ public class ExplosionSpell : Spell
     {
         _castCooldown = 3f;
         ManaCost = 40f;
+        
         Name = "Explosion Spell";
+    }
+
+    public override string GetDescription()
+    {
+        return "Creates an explosion with radius of " + Radius + " and deals " + Damage + " damage.";
     }
 
     private void Start()

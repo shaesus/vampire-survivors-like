@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
 {
     [HideInInspector] protected UnityEvent OnEnemyDie = new UnityEvent();
 
-    public float Damage = 25f;
+    [SerializeField] protected float damage = 25f;
 
     public bool IsDead { get; protected set; } = false;
 
@@ -136,7 +136,7 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Player playerComp))
         {
-            playerComp.TakeDamage(Damage);
+            playerComp.TakeDamage(damage);
             _timeForNextDamage = Time.time + _damageDelay;
         } //Take damage as enemy touches player
     }
@@ -145,7 +145,7 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Player playerComp) && Time.time > _timeForNextDamage)
         {
-            playerComp.TakeDamage(Damage);
+            playerComp.TakeDamage(damage);
             _timeForNextDamage = Time.time + _damageDelay;
         } //Take damage multiple times as enemy touches player
     }

@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class CameraShake : MonoBehaviour
 {
-    [SerializeField] private float _shakeDuration = 1f;
-    [SerializeField] private float _shakeMagnitude = 1f;
+    [SerializeField] private float shakeDuration = 1f;
+    [SerializeField] private float shakeMagnitude = 1f;
 
     private void Start()
     {
@@ -13,7 +13,7 @@ public class CameraShake : MonoBehaviour
 
     private void ShakeCamera()
     {
-        StartCoroutine(Shake(_shakeDuration, _shakeMagnitude));
+        StartCoroutine(Shake(shakeDuration, shakeMagnitude));
     }
 
     private IEnumerator Shake(float duration, float magnitude)

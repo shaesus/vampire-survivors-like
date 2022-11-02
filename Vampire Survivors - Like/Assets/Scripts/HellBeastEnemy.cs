@@ -19,7 +19,7 @@ public class HellBeastEnemy : Enemy
         {
             if (_isAttacking == true && Time.time > _timeForNextDamage)
             {
-                player.TakeDamage(Damage);
+                player.TakeDamage(damage);
                 _timeForNextDamage = Time.time + _damageDelay;
             }
         }
@@ -35,7 +35,7 @@ public class HellBeastEnemy : Enemy
             }
             else
             {
-                player.TakeDamage(Damage);
+                player.TakeDamage(damage);
             }
         }
     }

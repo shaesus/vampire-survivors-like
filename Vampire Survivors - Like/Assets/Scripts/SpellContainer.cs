@@ -20,6 +20,6 @@ public class SpellContainer : MonoBehaviour
     {
         _spellPlaceholder.sprite = CurrentSpell.SpellSprite;
         _nameText.text = CurrentSpell.Name;
-        _discriptionText.text = CurrentSpell.Discription;
+        _discriptionText.text = CurrentSpell.GetDescription();
     }
 }

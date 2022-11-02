@@ -3,16 +3,22 @@ using UnityEngine;
 
 public class SpeedUpSpell : Spell
 {
-    private float _speedUpMultiplier = 3f;
-    private float _speedUpTime = 10f;
+    private float _speedUpMultiplier = 2f;
+    private float _speedUpTime = 5f;
 
     private PlayerController _playerController;
 
     private void Awake()
     {
-        _castCooldown = 30f;
+        _castCooldown = 15f;
         ManaCost = 70f;
+
         Name = "Speed-Up Spell";
+    }
+
+    public override string GetDescription()
+    {
+        return "Increases speed by " + _speedUpMultiplier + " times for " + _speedUpTime + " seconds.";
     }
 
     private void Start()
@@ -41,5 +47,11 @@ public class SpeedUpSpell : Spell
         yield return new WaitForSeconds(_speedUpTime);
         StartCoroutine(StartCooldown());
         _playerController.SetDefaultSpeed();
+    }
+
+    public override void LvlUp()
+    {
+        _speedUpMultiplier += 0.1f;
+        _speedUpTime += 1f;
     }
 }

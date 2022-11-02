@@ -4,9 +4,7 @@ using DG.Tweening;
 public class SpellPickup : MonoBehaviour
 {
     [SerializeField] private GameObject useKeyPrompt;
-
-    private Vector3 _promptDefaultPos;
-
+    
     private bool _canPickup = false;
 
     private Spell _spell;
@@ -18,8 +16,6 @@ public class SpellPickup : MonoBehaviour
         Physics2D.SetLayerCollisionMask(gameObject.layer, LayerMask.GetMask("Player"));
 
         _spell = GetComponent<Spell>();
-
-        _promptDefaultPos = useKeyPrompt.transform.position;
     }
 
     private void Start()
@@ -38,7 +34,7 @@ public class SpellPickup : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Can pickup!1!");
-        
+
         useKeyPrompt.transform.DOLocalMoveY(0.67f, 0.2f);
         useKeyPrompt.GetComponent<SpriteRenderer>().DOFade(1, 0.1f);
         
@@ -53,6 +49,7 @@ public class SpellPickup : MonoBehaviour
         _canPickup = false;
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     private void Pickup()
     {
         var playerCombat = Player.Instance.GetComponent<PlayerCombat>();
@@ -76,9 +73,9 @@ public class SpellPickup : MonoBehaviour
 
     private void OnDestroy()
     {
-        DOTween.Kill(transform);
+        DOTween.KillAll();
     }
-    
+
     private void ChooseSpell()
     {
         var spellChoiceMenu = HUD.Instance.SpellChoiceMenu;

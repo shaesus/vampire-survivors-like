@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9fa50956f4a7fc44b3ed3dd2e7fb9f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 50
+  damage: 60
   _animator: {fileID: 5852320819028481438}
   _directionCoefficient: -1
   _attackRange: 0

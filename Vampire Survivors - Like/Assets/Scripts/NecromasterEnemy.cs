@@ -81,7 +81,7 @@ public class NecromasterEnemy : Enemy
         {
             projectile.transform.localScale = new Vector3(1, -1, 1);
         }
-        projectile.Damage = Damage;
+        projectile.Damage = damage;
         projectile.GetComponent<Rigidbody2D>().AddForce(_directionTowardsThePlayer.normalized
             * projectile.Speed, ForceMode2D.Impulse);
         Destroy(projectile, 3f);

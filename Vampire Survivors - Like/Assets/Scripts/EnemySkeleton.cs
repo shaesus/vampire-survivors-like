@@ -40,7 +40,7 @@ public class EnemySkeleton : Enemy
 
         if (Physics2D.OverlapArea(pointA, pointB, LayerMask.GetMask("Player")))
         {
-            Player.Instance.TakeDamage(Damage);
+            Player.Instance.TakeDamage(damage);
         }
     }
 

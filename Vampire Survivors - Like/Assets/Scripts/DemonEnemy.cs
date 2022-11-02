@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DemonEnemy : Enemy
 {
-    [SerializeField] private Vector3 _offset;
+    [SerializeField] private Vector3 offset;
 
     private void StartAttack()
     {
@@ -13,7 +13,7 @@ public class DemonEnemy : Enemy
 
     private new void Update()
     {
-        if (Physics2D.Raycast(transform.position + _offset, Vector2.left * transform.localScale.x,
+        if (Physics2D.Raycast(transform.position + offset, Vector2.left * transform.localScale.x,
                 _attackRange, LayerMask.GetMask("Player")))
         {
             StartAttack();
@@ -31,23 +31,23 @@ public class DemonEnemy : Enemy
 
         if (Physics2D.OverlapArea(pointA, pointB, LayerMask.GetMask("Player")))
         {
-            Player.Instance.TakeDamage(Damage);
+            Player.Instance.TakeDamage(damage);
         }
     }
 
     private new void OnCollisionEnter2D(Collision2D collision)
     {
-
+        return;
     }
 
     private new void OnCollisionStay2D(Collision2D collision)
     {
-
+        return;
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position + _offset, Vector3.left * transform.localScale.x * _attackRange);
+        Gizmos.DrawRay(transform.position + offset, Vector3.left * transform.localScale.x * _attackRange);
     }
 }

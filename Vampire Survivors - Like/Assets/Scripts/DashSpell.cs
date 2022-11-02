@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class DashSpell : Spell
 {
-    public float DashForce { get; set; } = 55f;
-
-    private float _dashingTime = 0.5f;
-
+    private readonly float _dashingTime = 0.5f;
+    
+    private float _dashForce = 55f;
+    
     private Player _playerInstance;
     private PlayerController _playerController;
     private Rigidbody2D _playerRb;
@@ -16,9 +16,15 @@ public class DashSpell : Spell
     {
         _castCooldown = 1f;
         ManaCost = 20f;
+        
         Name = "Dash Spell";
     }
 
+    public override string GetDescription()
+    {
+        return "Allows you to dash.";
+    }
+    
     private void Start()
     {
         _playerInstance = Player.Instance;
@@ -46,11 +52,11 @@ public class DashSpell : Spell
         if (_playerController.Movement.magnitude == 0)
         {
             _playerRb.AddForce(Vector2.right * _playerInstance.transform.localScale.x
-                * DashForce, ForceMode2D.Impulse);
+                * _dashForce, ForceMode2D.Impulse);
         }
         else
         {
-            _playerRb.AddForce(_playerController.Movement.normalized * DashForce, ForceMode2D.Impulse);
+            _playerRb.AddForce(_playerController.Movement.normalized * _dashForce, ForceMode2D.Impulse);
         }
 
         SpawnTrail(_playerCombat.DashTrail);
@@ -65,6 +71,7 @@ public class DashSpell : Spell
         CanCast = true;
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     private void SpawnTrail(GameObject dashTrail)
     {
         var playerPosition = Player.Instance.transform.position;
@@ -81,11 +88,11 @@ public class DashSpell : Spell
         }
 
         var localScale = trail.transform.localScale;
-        trail.transform.localScale = new Vector3(localScale.x * DashForce / 10f / 5.5f, localScale.y, localScale.z);
+        trail.transform.localScale = new Vector3(localScale.x * _dashForce / 10f / 5.5f, localScale.y, localScale.z);
 
         var trailRb = trail.GetComponent<Rigidbody2D>();
         trailRb.MovePosition(trailRb.position + _playerController.Movement.normalized
-            * DashForce / 10f / 2);
+            * _dashForce / 10f / 2);
 
         trail.GetComponent<SpriteRenderer>().enabled = true;
         trail.GetComponent<Animator>().enabled = true;
@@ -103,6 +110,6 @@ public class DashSpell : Spell
     public override void LvlUp()
     {
         _lvl++;
-        DashForce *= 1.1f;
+        _dashForce *= 1.1f;
     }
 }
