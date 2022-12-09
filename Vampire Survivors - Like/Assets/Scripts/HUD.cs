@@ -5,7 +5,6 @@ public class HUD : MonoBehaviour
 {
     public static HUD Instance { get; private set; }
 
-    public GameObject OptionsMenu;
     public GameObject SpellChoiceMenu;
 
     public Sprite DashSpellSprite;
@@ -63,15 +62,5 @@ public class HUD : MonoBehaviour
             }
             Debug.Log("1 NULL");
         }
-    }
-
-    public void OpenOptionsMenu()
-    {
-        OptionsMenu.SetActive(true);
-    }
-
-    public void CloseOptionsMenu()
-    {
-        OptionsMenu.SetActive(false);
     }
 }

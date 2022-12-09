@@ -147,7 +147,6 @@ public class GameManager : MonoBehaviour
             && _isGameEnded == false)
         {
             IsGamePaused = false;
-            HUD.Instance.OptionsMenu.SetActive(false);
             PauseMenu.GetComponent<Image>().DOFade(0, 0f).SetUpdate(true);
             PauseMenu.SetActive(false);
 
