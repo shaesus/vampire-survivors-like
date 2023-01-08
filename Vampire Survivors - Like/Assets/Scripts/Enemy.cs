@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using System.Linq;
+using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
@@ -39,6 +41,8 @@ public class Enemy : MonoBehaviour
 
         OnEnemyDie.AddListener(SpawnPickup);
         OnEnemyDie.AddListener(Die);
+
+        SpriteBlinker.OnBlinkEnded += () => _isBlinking = false;
     }
 
     protected void Update()
@@ -74,37 +78,20 @@ public class Enemy : MonoBehaviour
         transform.Translate(_movement * _speed * Time.fixedDeltaTime);
     }
 
-    public virtual void TakeDamage(float damage)
+    public virtual void TakeDamage(float takenDamage)
     {
         Debug.Log(gameObject.name + " tookDamage!");
 
-        if (IsDead == false)
+        if (IsDead == false && _isBlinking == false)
         {
-            StartCoroutine(StartBlinkSprite());
+            _isBlinking = true;
+            StartCoroutine(SpriteBlinker.StartBlinkSprite(_spriteRenderer));
         }
 
-        _currentHealth -= damage;
+        _currentHealth -= takenDamage;
         if (_currentHealth <= 0)
         {
             OnEnemyDie.Invoke();
-        }
-    }
-
-    private IEnumerator StartBlinkSprite()
-    {
-        if (_isBlinking == false)
-        {
-            _isBlinking = true;
-            var color = _spriteRenderer.color;
-            var defaultAlpha = color.a;
-            color.a = 0f;
-            _spriteRenderer.color = color;
-
-            yield return new WaitForSeconds(0.2f);
-
-            color.a = defaultAlpha;
-            _spriteRenderer.color = color;
-            _isBlinking = false;
         }
     }
 

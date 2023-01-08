@@ -50,7 +50,16 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        OnPlayerTakeDamage.AddListener(BlinkSprite);
+        SpriteBlinker.OnBlinkEnded += () => _isBlinking = false;
+        
+        OnPlayerTakeDamage.AddListener((() =>
+        {
+            if (_isBlinking == false)
+            {
+                _isBlinking = true;
+                StartCoroutine(SpriteBlinker.StartBlinkSprite(SR));
+            }
+        }));
 
         StartCoroutine(RegenerateMana());
         StartCoroutine(RegenerateHp());
@@ -121,29 +130,6 @@ public class Player : MonoBehaviour
 
         if (CurrentHealth <= 0)
             Die();
-    }
-
-    private IEnumerator StartBlinkSprite()
-    {
-        if (_isBlinking == false)
-        {
-            _isBlinking = true;
-            var color = SR.color;
-            var defaultAlpha = color.a;
-            color.a = 0f;
-            SR.color = color;
-
-            yield return new WaitForSeconds(0.2f);
-
-            color.a = defaultAlpha;
-            SR.color = color;
-            _isBlinking = false;
-        }
-    }
-
-    private void BlinkSprite()
-    {
-        StartCoroutine(StartBlinkSprite());
     }
 
     private void Die()

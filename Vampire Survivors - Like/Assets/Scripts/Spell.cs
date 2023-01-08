@@ -10,6 +10,7 @@ public abstract class Spell : MonoBehaviour
     
     public bool CanCast { get; protected set; } = true;
 
+    public float CastCooldown => _castCooldown;
     protected float _castCooldown;
 
     protected int _lvl = 1;

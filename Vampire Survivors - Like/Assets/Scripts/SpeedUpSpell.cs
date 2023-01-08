@@ -35,6 +35,7 @@ public class SpeedUpSpell : Spell
 
     private IEnumerator StartCooldown()
     {
+        CanCast = false;
         yield return new WaitForSeconds(_castCooldown);
         CanCast = true;
         Debug.Log("Can SpeedUp");
@@ -43,9 +44,8 @@ public class SpeedUpSpell : Spell
     private IEnumerator StartSpeedUp()
     {
         _playerController.ChangeSpeed(_speedUpMultiplier);
-        CanCast = false;
-        yield return new WaitForSeconds(_speedUpTime);
         StartCoroutine(StartCooldown());
+        yield return new WaitForSeconds(_speedUpTime);
         _playerController.SetDefaultSpeed();
     }
 

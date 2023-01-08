@@ -61,16 +61,21 @@ public class DashSpell : Spell
 
         SpawnTrail(_playerCombat.DashTrail);
 
-        yield return new WaitForSeconds(_dashingTime);
-
-        Physics2D.SetLayerCollisionMask(LayerMask.NameToLayer("Player"),
-            Physics2D.AllLayers);
+        StartCoroutine(EnableCollision());
 
         yield return new WaitForSeconds(_castCooldown);
 
         CanCast = true;
     }
 
+    private IEnumerator EnableCollision()
+    {
+        yield return new WaitForSeconds(_dashingTime);
+
+        Physics2D.SetLayerCollisionMask(LayerMask.NameToLayer("Player"),
+            Physics2D.AllLayers);
+    }
+    
     // ReSharper disable Unity.PerformanceAnalysis
     private void SpawnTrail(GameObject dashTrail)
     {

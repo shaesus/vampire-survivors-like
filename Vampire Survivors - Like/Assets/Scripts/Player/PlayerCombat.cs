@@ -6,6 +6,9 @@ public class PlayerCombat : MonoBehaviour
     [HideInInspector] public UnityEvent OnSpellSwitch = new UnityEvent();
     [HideInInspector] public UnityEvent OnAttack = new UnityEvent();
 
+    [HideInInspector] public static UnityEvent<Spell> OnSpaceSpellCast = new UnityEvent<Spell>();
+    [HideInInspector] public static UnityEvent<Spell> OnShiftSpellCast = new UnityEvent<Spell>();
+
     public GameObject ShootPoint;
     public GameObject DashTrail;
     public GameObject MeleeAttackTrail;
@@ -45,7 +48,7 @@ public class PlayerCombat : MonoBehaviour
             {
                 transform.localScale = new Vector3(1, 1, 1);
             }
-
+            
 
             var angle = Mathf.Atan2(LookDirection.y, LookDirection.x) * Mathf.Rad2Deg;
             _shootPointRb.rotation = angle;
@@ -60,6 +63,7 @@ public class PlayerCombat : MonoBehaviour
                 if (Spells[0].CanCast && Player.Instance.CurrentMana >= Spells[0].ManaCost)
                 {
                     Spells[0].Cast();
+                    OnSpaceSpellCast.Invoke(Spells[0]);
                     Player.Instance.DecreaseMana(Spells[0].ManaCost);
                 }
             }
@@ -68,6 +72,7 @@ public class PlayerCombat : MonoBehaviour
                 if (Spells[1].CanCast && Player.Instance.CurrentMana >= Spells[1].ManaCost)
                 {
                     Spells[1].Cast();
+                    OnShiftSpellCast.Invoke(Spells[1]);
                     Player.Instance.DecreaseMana(Spells[1].ManaCost);
                 }
             }
